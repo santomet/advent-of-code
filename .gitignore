@@ -2,7 +2,8 @@
 *.DS_store
 
 # Qt
-*/*/build-sp-Desktop_arm_darwin_generic_mach_o_64bit-Debug/
+*/*/build-qt-Desktop_arm_darwin_generic_mach_o_64bit-Debug/
+*/*/build-qt-Qt_6_5_1_for_macOS-Debug/
 
 # Prerequisites
 *.d
