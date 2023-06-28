@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "aoc2022.h"
 #include <QMainWindow>
 #include <QGroupBox>
 
@@ -16,6 +15,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    // void aocSwitch(int choice);
 
 private slots:
     void execute();
