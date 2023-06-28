@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
             // this, &MainWindow::on_pushButton_clicked);
 
     ui->comboBox->addItems({"1", "2", "3"});
-    gb.setLayout(ui->radioButtonLayout);
+    // gb.setLayout(ui->radioButtonLayout);
 
     connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::execute);
 }
