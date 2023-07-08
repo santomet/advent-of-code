@@ -37,21 +37,22 @@ MainWindow::~MainWindow()
 // }
 
 
-// Part 1 and 2 could be used for inner and outer testing (array and file)
-
 void MainWindow::execute()
 {
     AoC2022 AoC;
     // QString input = ui->lineEdit->text();
     // int i = ui->comboBox->currentIndex();
-    // int part = ui->radioButtonp1->isChecked() ? 1 : 2;
     // ui->textEdit->setText("aaa");
 
+    QString output_text = "The result is %1 \n";
     int choice = ui->comboBox->currentIndex() + 1;
+    int part = ui->radioButtonp1->isChecked() ? 1 : 2;
 
     switch (choice) {
     case 1:
-        ui->textEdit->setText(QString("The result is %1 \n").arg(AoC.day_01()));
+        output_text = part == 1 ? output_text.arg(AoC.day_01_1()) : output_text.arg(AoC.day_01_2());
+        ui->textEdit->setText(output_text);
+
         break;
     case 2:
         ui->textEdit->setText("No result yet");
@@ -63,4 +64,16 @@ void MainWindow::execute()
         break;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
