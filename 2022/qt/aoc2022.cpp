@@ -4,6 +4,10 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <cstring>
+
+#include <QTextStream>
+#include <QString>
 
 using namespace std;
 
@@ -13,6 +17,8 @@ AoC2022::AoC2022()
     int day_01_1(void);
     int day_01_2(void);
     void addMax(vector<int> *top, int new_value);
+
+    int day_02_1(void);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -106,3 +112,99 @@ int AoC2022::day_01_2()
 
     return (max1 + max2 + max3);
 }
+
+
+// What would your total score be if everything goes exactly according to your strategy guide?
+int AoC2022::day_02_1()
+{
+    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_02.txt");
+    if (!file.is_open()) return -1;
+
+    string line, elf_choice, elf_suggestion;
+    int score = 0;
+
+    while (getline(file, line)) {
+        elf_choice = line.substr(0, 1); // strtok_r(line, " , "); --- didn't work out
+        elf_suggestion = line.substr(2, 1);
+
+        // Getting points for shape you selected - 1, 2, 3
+        if (!elf_suggestion.compare("X")) {
+            score += 1;
+        } else if (!elf_suggestion.compare("Y")) {
+            score += 2;
+        } else if (!elf_suggestion.compare("Z")) {
+            score += 3;
+        }
+
+        // Getting points for outcome of the round - 0, 3, 6
+        if (!elf_suggestion.compare("X") && !elf_choice.compare("A")) { // draw
+            score += 3;
+        } else if (!elf_suggestion.compare("X") && !elf_choice.compare("B")) {
+            continue;
+        } else if (!elf_suggestion.compare("X") && !elf_choice.compare("C")) {
+            score += 6;
+        } else if (!elf_suggestion.compare("Y") && !elf_choice.compare("A")) {
+            score += 6;
+        } else if (!elf_suggestion.compare("Y") && !elf_choice.compare("B")) { // draw
+            score += 3;
+        } else if (!elf_suggestion.compare("Y") && !elf_choice.compare("C")) {
+            continue;
+        } else if (!elf_suggestion.compare("Z") && !elf_choice.compare("A")) {
+            continue;
+        } else if (!elf_suggestion.compare("Z") && !elf_choice.compare("B")) {
+            score += 6;
+        } else if (!elf_suggestion.compare("Z") && !elf_choice.compare("C")) { // draw
+            score += 3;
+        }
+
+
+
+        QTextStream qout(stdout);
+        QString qline = QString::fromStdString(elf_suggestion);
+        qout << qline;
+
+    }
+
+    return score;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

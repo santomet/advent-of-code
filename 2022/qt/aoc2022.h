@@ -12,6 +12,8 @@ public:
     AoC2022();
     int day_01_1(void);
     int day_01_2(void);
+
+    int day_02_1(void);
 private:
     void addMax(vector<int> *top, int new_value);
 
