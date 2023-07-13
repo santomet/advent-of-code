@@ -19,6 +19,7 @@ AoC2022::AoC2022()
     void addMax(vector<int> *top, int new_value);
 
     int day_02_1(void);
+    int day_02_2(void);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -161,6 +162,48 @@ int AoC2022::day_02_1()
     return score;
 }
 
+// Following the Elf's instructions for the second column,
+//      what would your total score be if everything goes exactly according to your strategy guide?
+int AoC2022::day_02_2()
+{
+    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_02.txt");
+    if (!file.is_open()) return -1;
+
+    string line, elf_choice, round_end;
+    int score = 0;
+
+    while (getline(file, line)) {
+        elf_choice = line.substr(0, 1);
+        round_end = line.substr(2, 1);
+
+        // X - need to lose
+        // Y - need to end up in draw
+        // Z - need to win
+
+        // Getting points for shape + points for outcome of the round - 1, 2, 3 + 0, 3, 6
+        if (!elf_choice.compare("A") && !round_end.compare("X")) {
+            score += 3;
+        } else if (!elf_choice.compare("A") && !round_end.compare("Y")) { // draw
+            score += 1 + 3;
+        } else if (!elf_choice.compare("A") && !round_end.compare("Z")) {
+            score += 2 + 6;
+        } else if (!elf_choice.compare("B") && !round_end.compare("X")) {
+            score += 1;
+        } else if (!elf_choice.compare("B") && !round_end.compare("Y")) { // draw
+            score += 2 + 3;
+        } else if (!elf_choice.compare("B") && !round_end.compare("Z")) {
+            score += 3 + 6;
+        } else if (!elf_choice.compare("C") && !round_end.compare("X")) {
+            score += 2;
+        } else if (!elf_choice.compare("C") && !round_end.compare("Y")) { // draw
+            score += 3 + 3;
+        } else if (!elf_choice.compare("C") && !round_end.compare("Z")) {
+            score += 1 + 6;
+        }
+    }
+
+    return score;
+}
 
 
 

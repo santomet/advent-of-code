@@ -14,6 +14,7 @@ public:
     int day_01_2(void);
 
     int day_02_1(void);
+    int day_02_2(void);
 private:
     void addMax(vector<int> *top, int new_value);
 
