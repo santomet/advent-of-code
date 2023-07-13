@@ -156,13 +156,6 @@ int AoC2022::day_02_1()
         } else if (!elf_suggestion.compare("Z") && !elf_choice.compare("C")) { // draw
             score += 3;
         }
-
-
-
-        QTextStream qout(stdout);
-        QString qline = QString::fromStdString(elf_suggestion);
-        qout << qline;
-
     }
 
     return score;
