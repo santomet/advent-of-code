@@ -56,11 +56,11 @@ void MainWindow::execute()
         break;
     case 2:
         output_text = part == 1 ? output_text.arg(AoC.day_02_1()) : output_text.arg(AoC.day_02_2());
-        // output_text = output_text.arg(AoC.day_02_1());
         ui->textEdit->setText(output_text);
         break;
     case 3:
-        ui->textEdit->setText("No result yet");
+        output_text = output_text.arg(AoC.day_03_1());
+        ui->textEdit->setText(output_text);
         break;
     default:
         break;

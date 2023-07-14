@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <cstring>
+#include <cctype>
 
 #include <QTextStream>
 #include <QString>
@@ -20,6 +21,8 @@ AoC2022::AoC2022()
 
     int day_02_1(void);
     int day_02_2(void);
+
+    int day_03_1(void);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -205,6 +208,41 @@ int AoC2022::day_02_2()
     return score;
 }
 
+
+// Find the item type that appears in both compartments of each rucksack.
+    // What is the sum of the priorities of those item types?
+int AoC2022::day_03_1()
+{
+    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_03.txt");
+    if (!file.is_open()) return -1;
+    // QTextStream qout(stdout);
+
+    string line, first_compartment, second_compartment;
+    int length = 0, priority_sum = 0;
+    int counter = 0;
+
+    LOOP:while (getline(file, line)) {
+        length = line.length();
+        first_compartment = line.substr(0, length / 2);
+        second_compartment = line.substr(length / 2, length);
+
+        for (int i = 0; i < first_compartment.length(); i++) {
+            for (int j = 0; j < first_compartment.length(); j++) {
+                if (first_compartment[i] == second_compartment[j]) {
+                   if (islower(first_compartment[i])) {
+                       priority_sum += first_compartment[i] - 96;
+                       goto LOOP;
+                   }
+
+                   priority_sum += first_compartment[i] - 38;
+                   goto LOOP;
+                }
+            }
+        }
+    }
+
+    return priority_sum;
+}
 
 
 
