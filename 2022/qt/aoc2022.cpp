@@ -6,6 +6,7 @@
 #include <vector>
 #include <cstring>
 #include <cctype>
+#include <sstream>
 
 #include <QTextStream>
 #include <QString>
@@ -24,6 +25,10 @@ AoC2022::AoC2022()
 
     int day_03_1(void);
     int day_03_2(void);
+
+    int day_04_1(void);
+    vector<string> splitStringToArray(const string& str, char splitter);
+    void addStartEnd(vector<int> &array, string item1, string item2);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -262,7 +267,7 @@ int AoC2022::day_03_2()
                         if (line1[i] == line3[k]) {
                             if (islower(line1[i])) {
                                 priority_sum += line1[i] - 96;
-                                goto LOOP; // TOOOFOO
+                                goto LOOP;
                             }
 
                             priority_sum += line1[i] - 38;
@@ -278,6 +283,57 @@ int AoC2022::day_03_2()
 }
 
 
+vector<string> AoC2022::splitStringToArray(const string& str, char splitter)
+{
+    vector<string> tokens;
+    stringstream ss(str);
+    string temp;
+    while (getline(ss, temp, splitter)) // split into new "lines" based on character
+    {
+        tokens.push_back(temp);
+    }
+    return tokens;
+}
+
+void AoC2022::addStartEnd(vector<int> &array, string item1, string item2)
+{
+    array.insert(array.begin(), stoi(item1));
+    array.insert(array.begin() + 1, stoi(item2));
+
+}
+
+// In how many assignment pairs does one range fully contain the other?
+int AoC2022::day_04_1()
+{
+    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_04.txt");
+    if (!file.is_open()) return -1;
+
+    string line;
+    int result = 0, check = 1;
+    vector<int> part1, part2;
+
+    while (getline(file, line)) {
+        vector<string> tokens = splitStringToArray(line, ',');
+
+        for (vector<string>::const_iterator it = tokens.begin(), end_it = tokens.end(); it != end_it; ++it) {
+            const string& token = *it;
+            vector<string> range = splitStringToArray(token, '-');
+            if (check == 1) {
+                addStartEnd(part1, range[0], range[1]);
+                check++;
+                continue;
+            }
+            addStartEnd(part2, range[0], range[1]);
+            check = 1;
+        }
+
+        if ((part1[0] <= part2[0] && part1[1] >= part2[1]) || (part2[0] <= part1[0] && part2[1] >= part1[1])) {
+            result++;
+        }
+    }
+
+    return result;
+}
 
 
 

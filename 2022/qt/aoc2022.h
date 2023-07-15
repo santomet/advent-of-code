@@ -18,8 +18,12 @@ public:
 
     int day_03_1(void);
     int day_03_2(void);
+
+    int day_04_1(void);
 private:
     void addMax(vector<int> *top, int new_value);
+    vector<string> splitStringToArray(const string& str, char splitter);
+    void addStartEnd(vector<int> &array, string item1, string item2);
 
 };
 
