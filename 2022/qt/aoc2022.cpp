@@ -23,6 +23,7 @@ AoC2022::AoC2022()
     int day_02_2(void);
 
     int day_03_1(void);
+    int day_03_2(void);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -215,11 +216,9 @@ int AoC2022::day_03_1()
 {
     ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_03.txt");
     if (!file.is_open()) return -1;
-    // QTextStream qout(stdout);
 
     string line, first_compartment, second_compartment;
     int length = 0, priority_sum = 0;
-    int counter = 0;
 
     LOOP:while (getline(file, line)) {
         length = line.length();
@@ -244,6 +243,39 @@ int AoC2022::day_03_1()
     return priority_sum;
 }
 
+// Find the item type that corresponds to the badges of each three-Elf group.
+    // What is the sum of the priorities of those item types?
+int AoC2022::day_03_2()
+{
+    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_03.txt");
+    if (!file.is_open()) return -1;
+
+    string line1, line2, line3;
+    int priority_sum = 0;
+
+    LOOP:while (getline(file, line1) && getline(file, line2) && getline(file, line3)) {
+
+        for (int i = 0; i < line1.length(); i++) {
+            for (int j = 0; j < line2.length(); j++) {
+                if (line1[i] == line2[j]) {
+                    for (int k = 0; k < line3.length(); k++) {
+                        if (line1[i] == line3[k]) {
+                            if (islower(line1[i])) {
+                                priority_sum += line1[i] - 96;
+                                goto LOOP; // TOOOFOO
+                            }
+
+                            priority_sum += line1[i] - 38;
+                            goto LOOP;
+                       }
+                   }
+                }
+            }
+        }
+    }
+
+    return priority_sum;
+}
 
 
 

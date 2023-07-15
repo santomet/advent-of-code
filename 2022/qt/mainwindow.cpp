@@ -59,7 +59,7 @@ void MainWindow::execute()
         ui->textEdit->setText(output_text);
         break;
     case 3:
-        output_text = output_text.arg(AoC.day_03_1());
+        output_text = part == 1 ? output_text.arg(AoC.day_03_1()) : output_text.arg(AoC.day_03_2());
         ui->textEdit->setText(output_text);
         break;
     default:
