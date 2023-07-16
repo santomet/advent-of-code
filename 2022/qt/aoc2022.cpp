@@ -27,6 +27,7 @@ AoC2022::AoC2022()
     int day_03_2(void);
 
     int day_04_1(void);
+    int day_04_2(void);
     vector<string> splitStringToArray(const string& str, char splitter);
     void addStartEnd(vector<int> &array, string item1, string item2);
 }
@@ -335,6 +336,38 @@ int AoC2022::day_04_1()
     return result;
 }
 
+// In how many assignment pairs do the ranges overlap?
+int AoC2022::day_04_2()
+{
+    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_04.txt");
+    if (!file.is_open()) return -1;
+
+    string line;
+    int result = 0, check = 1;
+    vector<int> part1, part2;
+
+    while (getline(file, line)) {
+        vector<string> tokens = splitStringToArray(line, ',');
+
+        for (vector<string>::const_iterator it = tokens.begin(), end_it = tokens.end(); it != end_it; ++it) {
+            const string& token = *it;
+            vector<string> range = splitStringToArray(token, '-');
+            if (check == 1) {
+                addStartEnd(part1, range[0], range[1]);
+                check++;
+                continue;
+            }
+            addStartEnd(part2, range[0], range[1]);
+            check = 1;
+        }
+
+        if ((part1[0] <= part2[1] && part2[0] <= part1[1])) {
+            result++;
+        }
+    }
+
+    return result;
+}
 
 
 
