@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 
-    ui->comboBox->addItems({"1", "2", "3", "4"});
+    ui->comboBox->addItems({"1", "2", "3", "4", "5"});
     // gb.setLayout(ui->radioButtonLayout);
 
     connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::execute);
@@ -29,13 +29,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-// void MainWindow::aocSwitch(int choice) {
-
-    // // AoC2022 AoC;
-    // // QTextStream qout(stdout);
-// }
-
 
 void MainWindow::execute()
 {
@@ -64,6 +57,10 @@ void MainWindow::execute()
         break;
     case 4:
         output_text = part == 1 ? output_text.arg(AoC.day_04_1()) : output_text.arg(AoC.day_04_2());
+        ui->textEdit->setText(output_text);
+        break;
+    case 5:
+        output_text = output_text.arg(QString::fromStdString(AoC.day_05_1()));
         ui->textEdit->setText(output_text);
         break;
     default:

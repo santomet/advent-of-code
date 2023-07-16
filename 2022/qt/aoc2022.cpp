@@ -30,6 +30,10 @@ AoC2022::AoC2022()
     int day_04_2(void);
     vector<string> splitStringToArray(const string& str, char splitter);
     void addStartEnd(vector<int> &array, string item1, string item2);
+
+    string day_05_1(void);
+    vector<vector<string>> parseInputCratesMap(vector<vector<string>>& crates, string& line);
+    void writeOutStack(vector<vector<string>> crates);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -289,8 +293,8 @@ vector<string> AoC2022::splitStringToArray(const string& str, char splitter)
     vector<string> tokens;
     stringstream ss(str);
     string temp;
-    while (getline(ss, temp, splitter)) // split into new "lines" based on character
-    {
+    // split into new "lines" based on character
+    while (getline(ss, temp, splitter)) {
         tokens.push_back(temp);
     }
     return tokens;
@@ -369,6 +373,83 @@ int AoC2022::day_04_2()
     return result;
 }
 
+
+vector<vector<string>> AoC2022::parseInputCratesMap(vector<vector<string>>& crates, string& line)
+{
+    int index = 0;
+
+    while (line.find("[", index) != string::npos) {
+        int char_index = line.find("[", index);
+        char crate = line[char_index + 1];
+
+        // stacks[(charIndex/4)+1]!!.addFirst(crate)
+        // crates[(char_index / 4) + 1].insert(crates.begin() + index, crate);
+        crates[(char_index / 4) + 1][index] += crate;
+
+        // // skip over this crate definition, which is 3 characters
+        index += 3;
+    }
+    return crates;
+}
+
+
+void AoC2022::writeOutStack(vector<vector<string>> crates)
+{
+    QTextStream qout(stdout);
+    string pretty;
+    // write out the crate stack in pretty format
+    for (int i = 0; i < crates.size(); i++) {
+        for (int j = 0; j < crates[i].size(); j++) {
+            pretty = crates[i][j] == "" ? " " : crates[i][j];
+            qout << QString::fromStdString(" " + pretty + " ");
+        }
+        qout << "\n";
+    }
+}
+
+
+// After the rearrangement procedure completes, what crate ends up on top of each stack?
+string AoC2022::day_05_1()
+{
+    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_05.txt");
+    if (!file.is_open()) return "-1";
+
+    string line, result = "";
+    // vector<vector<string>> crates;
+    vector<vector<string>> crates {
+        {"N", "", "", "C", "", "Z"},
+        {"Q", "G", "", "V", "", "S", "", "", "V"},
+        {"L", "C", "", "M", "", "T", "", "W", "L"},
+        {"S", "H", "", "L", "", "C", "D", "H", "S"},
+        {"C", "V", "F", "D", "", "D", "B", "Q", "F"},
+        {"Z", "T", "Z", "T", "C", "J", "G", "S", "Q"},
+        {"P", "P", "C", "W", "W", "F", "W", "J", "C"},
+        {"T", "L", "D", "G", "P", "P", "V", "N", "R"},
+    };
+
+    writeOutStack(crates);
+
+    // read the stacks of crates
+    // for (int i = 0; getline(file, line) && i < 8; i++) {
+        // // qout << QString::fromStdString(line);
+        // crates.insert(crates.begin() + i, parseInputCratesMap(line));
+    // }
+
+    // getline(file, line);
+    // qout << QString::fromStdString(parseInputCratesMap(crates[0], line)[0]);
+
+
+    // while (getline(file, line)) {
+        // vector<string> instruction = splitStringToArray(line, ' ');
+
+        // for (vector<string>::const_iterator it = instruction.begin(), end_it = instruction.end(); it != end_it; ++it) {
+            // const string& token = *it;
+            // vector<string> range = splitStringToArray(token, '-');
+        // }
+    // }
+
+    return result;
+}
 
 
 

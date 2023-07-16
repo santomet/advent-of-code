@@ -21,11 +21,15 @@ public:
 
     int day_04_1(void);
     int day_04_2(void);
-private:
-    void addMax(vector<int> *top, int new_value);
-    vector<string> splitStringToArray(const string& str, char splitter);
-    void addStartEnd(vector<int> &array, string item1, string item2);
 
+    string day_05_1(void);
+
+private:
+    void addMax(vector<int> *top, int new_value); // Day 1
+    vector<string> splitStringToArray(const string& str, char splitter); // Day 4
+    void addStartEnd(vector<int> &array, string item1, string item2); // Day 4
+    vector<vector<string>> parseInputCratesMap(vector<vector<string>>& crates, string& line); // Day 5
+    void writeOutStack(vector<vector<string>> crates); // Day 5
 };
 
 #endif // AOC2022_H
