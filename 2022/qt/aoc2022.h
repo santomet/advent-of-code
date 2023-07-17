@@ -30,6 +30,7 @@ private:
     void addStartEnd(vector<int> &array, string item1, string item2); // Day 4
     void parseInputCratesStacks(vector<vector<string>>& crates, string& line); // Day 5
     void writeOutStack(vector<vector<string>> crates); // Day 5
+    fstream& goToLine(fstream& file, unsigned int num); // Day 5
 };
 
 #endif // AOC2022_H

@@ -7,6 +7,7 @@
 #include <cstring>
 #include <cctype>
 #include <sstream>
+#include <limits>
 
 #include <QTextStream>
 #include <QString>
@@ -34,6 +35,7 @@ AoC2022::AoC2022()
     string day_05_1(void);
     void parseInputCratesStacks(vector<vector<string>>& crates, string& line);
     void writeOutStack(vector<vector<string>> crates);
+    fstream& goToLine(fstream& file, unsigned int num);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -406,27 +408,40 @@ void AoC2022::writeOutStack(vector<vector<string>> crates)
     }
 }
 
+fstream& AoC2022::goToLine(fstream& file, unsigned int num){
+    file.seekg(ios::beg);
+    for(int i=0; i < num - 1; ++i){
+        file.ignore(numeric_limits<streamsize>::max(),'\n');
+    }
+    return file;
+}
 
 // After the rearrangement procedure completes, what crate ends up on top of each stack?
 string AoC2022::day_05_1()
 {
-    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_05.txt");
+    fstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_05.txt");
     if (!file.is_open()) return "-1";
 
     string line, result = "NO RESULT YET";
-    vector<vector<string>> stacks;
-    // vector<vector<string>> crates {
-        // {"N", "", "", "C", "", "Z"},
-        // {"Q", "G", "", "V", "", "S", "", "", "V"},
-        // {"L", "C", "", "M", "", "T", "", "W", "L"},
-        // {"S", "H", "", "L", "", "C", "D", "H", "S"},
-        // {"C", "V", "F", "D", "", "D", "B", "Q", "F"},
-        // {"Z", "T", "Z", "T", "C", "J", "G", "S", "Q"},
-        // {"P", "P", "C", "W", "W", "F", "W", "J", "C"},
-        // {"T", "L", "D", "G", "P", "P", "V", "N", "R"},
-    // };
+    // vector<vector<string>> stacks;
+    vector<vector<string>> crates {
+        {"N", "", "", "C", "", "Z"},
+        {"Q", "G", "", "V", "", "S", "", "", "V"},
+        {"L", "C", "", "M", "", "T", "", "W", "L"},
+        {"S", "H", "", "L", "", "C", "D", "H", "S"},
+        {"C", "V", "F", "D", "", "D", "B", "Q", "F"},
+        {"Z", "T", "Z", "T", "C", "J", "G", "S", "Q"},
+        {"P", "P", "C", "W", "W", "F", "W", "J", "C"},
+        {"T", "L", "D", "G", "P", "P", "V", "N", "R"},
+    };
 
-    // getline(file, line);
+    writeOutStack(crates);
+
+    goToLine(file, 11);
+
+    getline(file, line);
+    QTextStream qout(stdout);
+    qout << QString::fromStdString(line);
 
     // read the stacks of crates
     // for (int i = 0; getline(file, line) && i < 8; i++) {
@@ -455,7 +470,6 @@ string AoC2022::day_05_1()
 
     // read the stacks of crates
 
-    // writeOutStack(stack);
 
     // // getline(file, line);
     // QTextStream qout(stdout);
