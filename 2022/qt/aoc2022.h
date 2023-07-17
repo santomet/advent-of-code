@@ -28,7 +28,7 @@ private:
     void addMax(vector<int> *top, int new_value); // Day 1
     vector<string> splitStringToArray(const string& str, char splitter); // Day 4
     void addStartEnd(vector<int> &array, string item1, string item2); // Day 4
-    vector<vector<string>> parseInputCratesMap(vector<vector<string>>& crates, string& line); // Day 5
+    void parseInputCratesStacks(vector<vector<string>>& crates, string& line); // Day 5
     void writeOutStack(vector<vector<string>> crates); // Day 5
 };
 
