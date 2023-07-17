@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 
-    ui->comboBox->addItems({"1", "2", "3", "4", "5"});
+    ui->comboBox->addItems({"1", "2", "3", "4", "5", "6"});
     // gb.setLayout(ui->radioButtonLayout);
 
     connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::execute);
@@ -61,6 +61,10 @@ void MainWindow::execute()
         break;
     case 5:
         output_text = output_text.arg(QString::fromStdString(AoC.day_05_1()));
+        ui->textEdit->setText(output_text);
+        break;
+    case 6:
+        output_text = output_text.arg(AoC.day_06_1());
         ui->textEdit->setText(output_text);
         break;
     default:

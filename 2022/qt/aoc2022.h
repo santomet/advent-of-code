@@ -24,6 +24,8 @@ public:
 
     string day_05_1(void);
 
+    int day_06_1(void);
+
 private:
     void addMax(vector<int> *top, int new_value); // Day 1
     vector<string> splitStringToArray(const string& str, char splitter); // Day 4

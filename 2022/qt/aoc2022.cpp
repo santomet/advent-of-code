@@ -36,6 +36,8 @@ AoC2022::AoC2022()
     void parseInputCratesStacks(vector<vector<string>>& crates, string& line);
     void writeOutStack(vector<vector<string>> crates);
     fstream& goToLine(fstream& file, unsigned int num);
+
+    int day_06_1(void);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -393,7 +395,6 @@ void AoC2022::parseInputCratesStacks(vector<vector<string>>& crates, string& lin
     }
 }
 
-
 void AoC2022::writeOutStack(vector<vector<string>> crates)
 {
     QTextStream qout(stdout);
@@ -488,6 +489,40 @@ string AoC2022::day_05_1()
     return result;
 }
 
+
+// How many characters need to be processed before the first start-of-packet marker is detected?
+int AoC2022::day_06_1()
+{
+    fstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_06.txt");
+    if (!file.is_open()) return -1;
+
+    string input, part;
+    getline(file, input);
+
+    int i = 0, check = 0;
+
+    LOOP:while (i + 4 < input.length()) {
+        part = input.substr(i, 4);
+
+        for (int j = 0; j < part.length(); j++) {
+            for (int k = 0; k < part.length(); k++) {
+                if (part[j] == part[k] && j != k) {
+                    i++;
+                    check = 0;
+                    goto LOOP;
+                }
+                check++;
+                if (check == 16) {
+                    return i + 4;
+                }
+            }
+        }
+        i++;
+        check = 0;
+    }
+
+    return 0;
+}
 
 
 
