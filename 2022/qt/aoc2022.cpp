@@ -14,6 +14,7 @@
 
 using namespace std;
 
+
 AoC2022::AoC2022()
 {
 
@@ -39,6 +40,11 @@ AoC2022::AoC2022()
 
     int day_06_1(void);
     int day_06_2(void);
+
+    int day_07_1(void);
+    void add_file(elf_directory *dir, elf_file *file);
+    elf_directory *make_dir(string name, elf_directory *parent);
+    void print_dir(elf_directory *dir);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -525,7 +531,7 @@ int AoC2022::day_06_1()
     return 0;
 }
 
-
+// How many characters need to be processed before the first start-of-message marker is detected?
 int AoC2022::day_06_2()
 {
     fstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_06.txt");
@@ -559,6 +565,49 @@ int AoC2022::day_06_2()
     return 0;
 }
 
+
+// Find all of the directories with a total size of at most 100000.
+    // What is the sum of the total sizes of those directories?
+int AoC2022::day_07_1() {
+    fstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_07.txt");
+    if (!file.is_open()) return -1;
+
+    string line, file_name;
+    elf_directory parent_dir;
+    int sum = 0, total_sum = 0, dir_count = 0;
+    vector<string> line_part;
+    vector<elf_directory> sum_array;
+
+    // root dir
+    elf_directory *root = make_dir("/", NULL);
+    sum_array.push_back(*root);
+
+    // goToLine(file, 2);
+
+    // while(getline(file, line)) {
+        // parent_dir = sum_array[dir_count];
+
+        // if (line[0] == '$' && line.find("cd") != string::npos) {
+            // if (line.substr(line.length() - 2, 2) == "..") {
+                // dir_count--;
+            // } else {
+                // dir_count++;
+            // }
+        // } else if (line.substr(0, 3) == "dir") {
+            // make_dir(line.substr(4, line.length() - 5), &parent_dir);
+        // } else {
+            // line_part = splitStringToArray(line, ' ');
+            // add_file(&parent_dir, make_file(line_part[1], stoi(line_part[0])));
+        // }
+    // }
+    // print_dir(root);
+
+    QTextStream qout(stdout);
+    QString qline = QString::fromStdString(line.substr(4, 2));
+    qout << qline;
+
+    return sum;
+}
 
 
 
