@@ -19,6 +19,8 @@ set(PROJECT_SOURCES
         aoc2022.h
         aoc2022.cpp
         mainwindow.ui
+        utilities.cpp
+        utilities.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

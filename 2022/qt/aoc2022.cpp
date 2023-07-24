@@ -1,4 +1,5 @@
 #include "aoc2022.h"
+#include "utilities.h"
 
 #include <iostream>
 #include <fstream>
@@ -8,6 +9,7 @@
 #include <cctype>
 #include <sstream>
 #include <limits>
+#include <map>
 
 #include <QTextStream>
 #include <QString>
@@ -17,10 +19,8 @@ using namespace std;
 
 AoC2022::AoC2022()
 {
-
     int day_01_1(void);
     int day_01_2(void);
-    void addMax(vector<int> *top, int new_value);
 
     int day_02_1(void);
     int day_02_2(void);
@@ -30,21 +30,13 @@ AoC2022::AoC2022()
 
     int day_04_1(void);
     int day_04_2(void);
-    vector<string> splitStringToArray(const string& str, char splitter);
-    void addStartEnd(vector<int> &array, string item1, string item2);
 
     string day_05_1(void);
-    void parseInputCratesStacks(vector<vector<string>>& crates, string& line);
-    void writeOutStack(vector<vector<string>> crates);
-    fstream& goToLine(fstream& file, unsigned int num);
 
     int day_06_1(void);
     int day_06_2(void);
 
     int day_07_1(void);
-    void add_file(elf_directory *dir, elf_file *file);
-    elf_directory *make_dir(string name, elf_directory *parent);
-    void print_dir(elf_directory *dir);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -73,43 +65,14 @@ int AoC2022::day_01_1()
     return max;
 }
 
-void AoC2022::addMax(vector<int> *top, int new_value)
-{
-    int min_index = 0;
-    for (int i = 0; i < 3; i++) {
-        if (top[i] < top[min_index]) {
-           min_index = i;
-        }
-    }
-
-    if (new_value > top->at(min_index)) {
-        // top[min_index] = new_value;
-        top->insert(top->begin() + min_index, new_value);
-    }
-}
-
 // Find the top three Elves carrying the most Calories. How many Calories are those Elves carrying in total?
 int AoC2022::day_01_2()
 {
     ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_01.txt");
     if (!file.is_open()) return -1;
 
-    // The top three
-    vector<int> top(3);
-
     string line;
     int sum = 0;
-
-    // while (getline(file, line)) {
-       // if (line.empty()) {
-            // addMax(&top, sum);
-            // sum = 0;
-            // continue;
-        // }
-
-        // sum += stoi(line);
-    // }
-    // addMax(&top, sum);
 
     int max1 = 0;
     int max2 = 0;
@@ -299,25 +262,6 @@ int AoC2022::day_03_2()
 }
 
 
-vector<string> AoC2022::splitStringToArray(const string& str, char splitter)
-{
-    vector<string> tokens;
-    stringstream ss(str);
-    string temp;
-    // split into new "lines" based on character
-    while (getline(ss, temp, splitter)) {
-        tokens.push_back(temp);
-    }
-    return tokens;
-}
-
-void AoC2022::addStartEnd(vector<int> &array, string item1, string item2)
-{
-    array.insert(array.begin(), stoi(item1));
-    array.insert(array.begin() + 1, stoi(item2));
-
-}
-
 // In how many assignment pairs does one range fully contain the other?
 int AoC2022::day_04_1()
 {
@@ -329,17 +273,17 @@ int AoC2022::day_04_1()
     vector<int> part1, part2;
 
     while (getline(file, line)) {
-        vector<string> tokens = splitStringToArray(line, ',');
+        vector<string> tokens = Utilities::splitString(line, ',');
 
         for (vector<string>::const_iterator it = tokens.begin(), end_it = tokens.end(); it != end_it; ++it) {
             const string& token = *it;
-            vector<string> range = splitStringToArray(token, '-');
+            vector<string> range = Utilities::splitString(token, '-');
             if (check == 1) {
-                addStartEnd(part1, range[0], range[1]);
+                Utilities::addStartEnd(part1, range[0], range[1]);
                 check++;
                 continue;
             }
-            addStartEnd(part2, range[0], range[1]);
+            Utilities::addStartEnd(part2, range[0], range[1]);
             check = 1;
         }
 
@@ -362,17 +306,17 @@ int AoC2022::day_04_2()
     vector<int> part1, part2;
 
     while (getline(file, line)) {
-        vector<string> tokens = splitStringToArray(line, ',');
+        vector<string> tokens = Utilities::splitString(line, ',');
 
         for (vector<string>::const_iterator it = tokens.begin(), end_it = tokens.end(); it != end_it; ++it) {
             const string& token = *it;
-            vector<string> range = splitStringToArray(token, '-');
+            vector<string> range = Utilities::splitString(token, '-');
             if (check == 1) {
-                addStartEnd(part1, range[0], range[1]);
+                Utilities::addStartEnd(part1, range[0], range[1]);
                 check++;
                 continue;
             }
-            addStartEnd(part2, range[0], range[1]);
+            Utilities::addStartEnd(part2, range[0], range[1]);
             check = 1;
         }
 
@@ -385,44 +329,6 @@ int AoC2022::day_04_2()
 }
 
 
-void AoC2022::parseInputCratesStacks(vector<vector<string>>& crates, string& line)
-{
-    int index = 0;
-
-    while (line.find("[", index) != string::npos) {
-        int char_index = line.find("[", index);
-        char crate = line[char_index + 1];
-
-        // stacks[(charIndex/4)+1]!!.addFirst(crate)
-        crates[(char_index / 4) + 1].insert(crates[index].begin() + index, "");
-        crates[(char_index / 4) + 1][index] += crate;
-
-        // // skip over this crate definition, which is 3 characters
-        index += 3;
-    }
-}
-
-void AoC2022::writeOutStack(vector<vector<string>> crates)
-{
-    QTextStream qout(stdout);
-    string pretty;
-    // write out the crate stack in pretty format
-    for (int i = 0; i < crates.size(); i++) {
-        for (int j = 0; j < crates[i].size(); j++) {
-            pretty = crates[i][j] == "" ? " " : crates[i][j];
-            qout << QString::fromStdString(" " + pretty + " ");
-        }
-        qout << "\n";
-    }
-}
-
-fstream& AoC2022::goToLine(fstream& file, unsigned int num){
-    file.seekg(ios::beg);
-    for(int i=0; i < num - 1; ++i){
-        file.ignore(numeric_limits<streamsize>::max(),'\n');
-    }
-    return file;
-}
 
 // After the rearrangement procedure completes, what crate ends up on top of each stack?
 string AoC2022::day_05_1()
@@ -443,9 +349,9 @@ string AoC2022::day_05_1()
         {"T", "L", "D", "G", "P", "P", "V", "N", "R"},
     };
 
-    writeOutStack(crates);
+    Utilities::writeOutStack(crates);
 
-    goToLine(file, 11);
+    Utilities::goToLine(file, 11);
 
     getline(file, line);
     QTextStream qout(stdout);
@@ -572,41 +478,41 @@ int AoC2022::day_07_1() {
     fstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_07.txt");
     if (!file.is_open()) return -1;
 
-    string line, file_name;
-    elf_directory parent_dir;
-    int sum = 0, total_sum = 0, dir_count = 0;
-    vector<string> line_part;
-    vector<elf_directory> sum_array;
+    // string line, file_name;
+    // elf_directory current;
+    // int sum = 0, total_sum = 0, dir_count = 0;
+    // vector<string> line_part;
+    // vector<elf_directory> sum_array;
 
-    // root dir
-    elf_directory *root = make_dir("/", NULL);
-    sum_array.push_back(*root);
+    // // root dir
+    // elf_directory *root = make_dir("/", NULL);
+    // parent_array.push_back(*root);
+    // sum_map["/"] = *root;
+
 
     // goToLine(file, 2);
 
     // while(getline(file, line)) {
-        // parent_dir = sum_array[dir_count];
+        // line_part = splitStringToArray(line, ' ');
+        // parent_dir = parent_array[dir_count];
 
-        // if (line[0] == '$' && line.find("cd") != string::npos) {
-            // if (line.substr(line.length() - 2, 2) == "..") {
+        // if (line_part[0] == "$" && line_part[1] == "cd") {
+            // if (line.substr(line.length() - 2, 2) == "..") { // TODO
                 // dir_count--;
             // } else {
                 // dir_count++;
             // }
         // } else if (line.substr(0, 3) == "dir") {
-            // make_dir(line.substr(4, line.length() - 5), &parent_dir);
-        // } else {
+            // sum_map[line.substr(4, line.length() - 5)] = *make_dir(line.substr(4, line.length() - 5), &parent_dir);
+        // } else if (isnumber(line[0])) {
             // line_part = splitStringToArray(line, ' ');
             // add_file(&parent_dir, make_file(line_part[1], stoi(line_part[0])));
         // }
     // }
     // print_dir(root);
 
-    QTextStream qout(stdout);
-    QString qline = QString::fromStdString(line.substr(4, 2));
-    qout << qline;
 
-    return sum;
+    return 0;
 }
 
 
