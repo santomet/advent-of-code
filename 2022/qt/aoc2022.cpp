@@ -39,6 +39,7 @@ AoC2022::AoC2022()
     int day_06_2(void);
 
     int day_07_1(void);
+    int day_07_2(void);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -570,16 +571,41 @@ int AoC2022::day_07_1() {
                                         });
 
     return total_dir_size;
-    // return 0;
 }
 
-// int AoC2022::day_07_1() {
-    // readInput7();
-    // calculateDirectorySize(all_directories.at("/"));
+int AoC2022::day_07_2() {
+    // Read the input and calculate the size of directories
+    readInput7();
+    CalculateDirectorySize(all_directories.at("/"));
 
-    // return 0;
-// }
+    constexpr auto totalSpace = 70000000;
+    constexpr auto desiredSpace = 30000000;
 
+    // Calculate unused space in the root directory
+    const auto unusedSpace = totalSpace - all_directories.at("/").size;
+
+    // Calculate the size to delete from the directories to meet the desired space
+    const auto sizeToDelete = desiredSpace - unusedSpace;
+
+    // Get a vector of directories sorted by size
+    vector<ElfDirectory> directoriesSortedBySize;
+    for (const auto& entry : all_directories) {
+        directoriesSortedBySize.push_back(entry.second);
+    }
+    sort(directoriesSortedBySize.begin(), directoriesSortedBySize.end(),
+              [](const ElfDirectory& a, const ElfDirectory& b) { return a.size < b.size; });
+
+    // Find the directory to delete based on the sizeToDelete
+    auto deleted_directory_size = 0;
+    for (const auto& directory : directoriesSortedBySize) {
+        if (directory.size >= sizeToDelete) {
+            deleted_directory_size = directory.size;
+            break;
+        }
+    }
+
+    return deleted_directory_size;
+}
 
 
 

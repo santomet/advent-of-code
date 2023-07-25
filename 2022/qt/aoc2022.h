@@ -32,6 +32,7 @@ public:
     int day_06_2(void);
 
     int day_07_1(void);
+    int day_07_2(void);
 
 private:
 };
