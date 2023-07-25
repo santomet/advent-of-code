@@ -9,7 +9,9 @@
 #include <cctype>
 #include <sstream>
 #include <limits>
-#include <map>
+#include <unordered_set>
+#include <unordered_map>
+#include <numeric>
 
 #include <QTextStream>
 #include <QString>
@@ -472,48 +474,112 @@ int AoC2022::day_06_2()
 }
 
 
+// DAY 7
 // Find all of the directories with a total size of at most 100000.
     // What is the sum of the total sizes of those directories?
-int AoC2022::day_07_1() {
-    fstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_07.txt");
-    if (!file.is_open()) return -1;
+struct ElfFile
+{
+    string path;
+    int size = 0;
+};
 
-    // string line, file_name;
-    // elf_directory current;
-    // int sum = 0, total_sum = 0, dir_count = 0;
-    // vector<string> line_part;
-    // vector<elf_directory> sum_array;
+struct ElfDirectory
+{
+    string path;
+    int size = -1;
+    unordered_set<string> child_directories;
+    unordered_set<string> child_files;
 
-    // // root dir
-    // elf_directory *root = make_dir("/", NULL);
-    // parent_array.push_back(*root);
-    // sum_map["/"] = *root;
+};
 
+auto all_directories = unordered_map<string, ElfDirectory>{};
+auto all_files = unordered_map<string, ElfFile>{};
 
-    // goToLine(file, 2);
+void readInput7()
+{
+    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_07.txt");
 
-    // while(getline(file, line)) {
-        // line_part = splitStringToArray(line, ' ');
-        // parent_dir = parent_array[dir_count];
+    all_directories["/"] = ElfDirectory{"/"};
 
-        // if (line_part[0] == "$" && line_part[1] == "cd") {
-            // if (line.substr(line.length() - 2, 2) == "..") { // TODO
-                // dir_count--;
-            // } else {
-                // dir_count++;
-            // }
-        // } else if (line.substr(0, 3) == "dir") {
-            // sum_map[line.substr(4, line.length() - 5)] = *make_dir(line.substr(4, line.length() - 5), &parent_dir);
-        // } else if (isnumber(line[0])) {
-            // line_part = splitStringToArray(line, ' ');
-            // add_file(&parent_dir, make_file(line_part[1], stoi(line_part[0])));
-        // }
-    // }
-    // print_dir(root);
+    auto pwd = vector<string>{{"/"}};
 
+    for (const auto& line : input) {
+        auto tokens = Utilities::splitString(line, ' ');
+        if (tokens[0] == "$") {
+            if (tokens[1] == "ls") {
+                continue;
+            } else {
+                Utilities::verifyElseCrash(tokens[1] == "cd");
+                const auto& target = tokens[2];
+                if (target == "/") {
+                    pwd.clear();
+                    pwd.emplace_back("/");
+                } else if (target == "..") {
+                    pwd.pop_back();
+                } else {
+                    pwd.emplace_back(pwd.back() + target + "/");
+                }
+            }
+        } else {
+            auto& parent = all_directories.at(pwd.back());
+            if (tokens[0] == "dir") {
+                auto path = pwd.back() + tokens[1] + "/";
+                if (all_directories.find(path) == all_directories.end()) {
+                    all_directories[path] = ElfDirectory{ path };
+                }
 
-    return 0;
+                parent.child_directories.insert(path);
+            } else {
+                auto path = pwd.back() + tokens[1];
+                if (all_files.find(path) == all_files.end()) {
+                    all_files[path] = ElfFile{ path, stoi(tokens[0]) };
+                }
+
+                parent.child_files.insert(path);
+            }
+        }
+    }
+
 }
+
+int CalculateDirectorySize(ElfDirectory& directory) {
+    if (directory.size >= 0) {
+        return directory.size;
+    }
+
+    int totalSizeOfFiles = std::accumulate(directory.child_files.begin(), directory.child_files.end(), 0,
+                                           [](int sum, const std::string& path) { return sum + all_files.at(path).size; });
+
+    int totalSizeOfDirectories = 0;
+    for (const std::string& path : directory.child_directories) {
+        totalSizeOfDirectories += CalculateDirectorySize(all_directories.at(path));
+    }
+
+    directory.size = totalSizeOfFiles + totalSizeOfDirectories;
+    return directory.size;
+}
+
+int AoC2022::day_07_1() {
+    readInput7();
+    CalculateDirectorySize(all_directories.at("/"));
+
+    auto total_dir_size = std::accumulate(all_directories.begin(), all_directories.end(), 0,
+                                        [](int sum, const std::pair<std::string, ElfDirectory>& directoryPair) {
+                                            const ElfDirectory& directory = directoryPair.second;
+                                            return sum + (directory.size <= 100000 ? directory.size : 0);
+                                        });
+
+    return total_dir_size;
+    // return 0;
+}
+
+// int AoC2022::day_07_1() {
+    // readInput7();
+    // calculateDirectorySize(all_directories.at("/"));
+
+    // return 0;
+// }
+
 
 
 

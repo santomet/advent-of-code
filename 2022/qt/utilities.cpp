@@ -24,7 +24,7 @@ namespace Utilities {
         return tokens;
     }
 
-    vector<string> ReadAllLinesInFile(const filesystem::path& path)
+    vector<string> readAllLinesInFile(const filesystem::path& path)
     {
         auto lines = vector<string>{};
         if (!filesystem::exists(path))
@@ -40,6 +40,15 @@ namespace Utilities {
         }
 
         return lines;
+    }
+
+    void verifyElseCrash(bool bAssert)
+    {
+        assert(bAssert);
+        if (!bAssert)
+        {
+            terminate();
+        }
     }
 
     void addStartEnd(vector<int> &array, string item1, string item2)

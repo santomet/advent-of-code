@@ -72,7 +72,6 @@ void MainWindow::execute()
         output_text = output_text.arg(AoC.day_07_1());
         ui->textEdit->setText(output_text);
         break;
-        break;
     }
 }
 
