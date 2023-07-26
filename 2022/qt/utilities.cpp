@@ -58,37 +58,6 @@ namespace Utilities {
 
     }
 
-    void parseInputCratesStacks(vector<vector<string>>& crates, string& line)
-    {
-        int index = 0;
-
-        while (line.find("[", index) != string::npos) {
-            int char_index = line.find("[", index);
-            char crate = line[char_index + 1];
-
-            // stacks[(charIndex/4)+1]!!.addFirst(crate)
-            crates[(char_index / 4) + 1].insert(crates[index].begin() + index, "");
-            crates[(char_index / 4) + 1][index] += crate;
-
-            // // skip over this crate definition, which is 3 characters
-            index += 3;
-        }
-    }
-
-    void writeOutStack(vector<vector<string>> crates)
-    {
-        QTextStream qout(stdout);
-        string pretty;
-        // write out the crate stack in pretty format
-        for (int i = 0; i < crates.size(); i++) {
-            for (int j = 0; j < crates[i].size(); j++) {
-                pretty = crates[i][j] == "" ? " " : crates[i][j];
-                qout << QString::fromStdString(" " + pretty + " ");
-            }
-            qout << "\n";
-        }
-    }
-
     fstream& goToLine(fstream& file, unsigned int num){
         file.seekg(ios::beg);
         for(int i=0; i < num - 1; ++i){

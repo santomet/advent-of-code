@@ -12,6 +12,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <numeric>
+#include <stack>
 
 #include <QTextStream>
 #include <QString>
@@ -332,75 +333,64 @@ int AoC2022::day_04_2()
 }
 
 
-
 // After the rearrangement procedure completes, what crate ends up on top of each stack?
 string AoC2022::day_05_1()
 {
-    fstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_05.txt");
-    if (!file.is_open()) return "-1";
+    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_05.txt");
 
-    string line, result = "NO RESULT YET";
-    // vector<vector<string>> stacks;
-    vector<vector<string>> crates {
-        {"N", "", "", "C", "", "Z"},
-        {"Q", "G", "", "V", "", "S", "", "", "V"},
-        {"L", "C", "", "M", "", "T", "", "W", "L"},
-        {"S", "H", "", "L", "", "C", "D", "H", "S"},
-        {"C", "V", "F", "D", "", "D", "B", "Q", "F"},
-        {"Z", "T", "Z", "T", "C", "J", "G", "S", "Q"},
-        {"P", "P", "C", "W", "W", "F", "W", "J", "C"},
-        {"T", "L", "D", "G", "P", "P", "V", "N", "R"},
-    };
+    // Find the empty line in out input.
+    auto blankIndex = -1;
+    for (auto i = 0; i < input.size(); ++i) {
+        if (input[i].size() == 0) { // blank line
+            blankIndex = i;
+            break;
+        }
+    }
 
-    Utilities::writeOutStack(crates);
+    // Setup initial state.
+    auto stacks = vector<stack<char>>{};
+    const auto& stackLabels = input[blankIndex - 1];
+    for (auto i = 0; i < stackLabels.size(); ++i) {
+        if (stackLabels[i] == ' ') {
+            continue;
+        }
 
-    Utilities::goToLine(file, 11);
+        auto currentStack = stack<char>{};
+        for (auto lineIndex = blankIndex - 2; lineIndex >= 0; --lineIndex) {
+            const auto& line = input[lineIndex];
+            const auto& crate = line[i];
+            if (crate == ' ') {
+                break;
+            }
 
-    getline(file, line);
-    QTextStream qout(stdout);
-    qout << QString::fromStdString(line);
+            currentStack.push(crate);
+        }
+        stacks.emplace_back(currentStack);
+    }
 
-    // read the stacks of crates
-    // for (int i = 0; getline(file, line) && i < 8; i++) {
-        // parseInputCratesStacks(stack, line);
-    // }
+    // Process moves.
+    for (auto i = blankIndex + 1; i < input.size(); ++i) {
+        auto tokens = Utilities::splitString(input[i], ' ');
+        auto amount = stoi(tokens[1]);
+        auto from = stoi(tokens[3]) - 1;
+        auto to = stoi(tokens[5]) - 1;
 
-    // read the stacks of crates
-    // for (int i = 0; getline(file, line) && i < 8; i++) {
-        // while (line.find("[", i) != string::npos) {
-            // int char_index = line.find("[", i);
-            // char crate = line[char_index + 1];
-            // QTextStream qout(stdout);
-            // qout << crate;
-
-            // // // stacks[(charIndex/4)+1]!!.addFirst(crate)
-            // // stacks[(char_index / 4) + 1].insert(stacks[i].begin() + i, "");
-            // // // stacks[(char_index / 4) + 1].insert(stacks[i].begin() + i, crate);
-            // // stacks[(char_index / 4) + 1][i] += crate;
-
-            // // // skip over this crate definition, which is 3 characters
-            // i += 3;
-    // }
-    // }
+        QTextStream qout(stdout);
+        qout << amount << "-" << from << "-" << to << "\n";
 
 
+        for (int i = 1; i <= amount; ++i) {
+            auto crate = stacks[from].top();
+            stacks[from].pop();
+            stacks[to].push(crate);
+        }
+    }
 
-    // read the stacks of crates
-
-
-    // // getline(file, line);
-    // QTextStream qout(stdout);
-    // qout << QString::fromStdString(stack[0][0]);
-
-
-    // while (getline(file, line)) {
-        // vector<string> instruction = splitStringToArray(line, ' ');
-
-        // for (vector<string>::const_iterator it = instruction.begin(), end_it = instruction.end(); it != end_it; ++it) {
-            // const string& token = *it;
-            // vector<string> range = splitStringToArray(token, '-');
-        // }
-    // }
+    // Access the top elements.
+    string result = "";
+    for (const auto& currentStack : stacks) {
+        result += currentStack.top();
+    }
 
     return result;
 }
@@ -606,17 +596,6 @@ int AoC2022::day_07_2() {
 
     return deleted_directory_size;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
