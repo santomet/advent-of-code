@@ -27,6 +27,7 @@ public:
     int day_04_2(void);
 
     string day_05_1(void);
+    string day_05_2(void);
 
     int day_06_1(void);
     int day_06_2(void);

@@ -35,6 +35,7 @@ AoC2022::AoC2022()
     int day_04_2(void);
 
     string day_05_1(void);
+    string day_05_2(void);
 
     int day_06_1(void);
     int day_06_2(void);
@@ -375,10 +376,6 @@ string AoC2022::day_05_1()
         auto from = stoi(tokens[3]) - 1;
         auto to = stoi(tokens[5]) - 1;
 
-        QTextStream qout(stdout);
-        qout << amount << "-" << from << "-" << to << "\n";
-
-
         for (int i = 1; i <= amount; ++i) {
             auto crate = stacks[from].top();
             stacks[from].pop();
@@ -393,6 +390,73 @@ string AoC2022::day_05_1()
     }
 
     return result;
+}
+
+// After the rearrangement procedure completes, what crate ends up on top of each stack?
+string AoC2022::day_05_2()
+{
+    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_05.txt");
+
+    // Find the empty line in out input.
+    auto blankIndex = -1;
+    for (auto i = 0; i < input.size(); ++i) {
+        if (input[i].size() == 0) { // blank line
+            blankIndex = i;
+            break;
+        }
+    }
+
+    // Setup initial state.
+    auto stacks = vector<stack<char>>{};
+    const auto& stackLabels = input[blankIndex - 1];
+    for (auto i = 0; i < stackLabels.size(); ++i) {
+        if (stackLabels[i] == ' ') {
+            continue;
+        }
+
+        auto currentStack = stack<char>{};
+        for (auto lineIndex = blankIndex - 2; lineIndex >= 0; --lineIndex) {
+            const auto& line = input[lineIndex];
+            const auto& crate = line[i];
+            if (crate == ' ') {
+                break;
+            }
+
+            currentStack.push(crate);
+        }
+        stacks.emplace_back(currentStack);
+    }
+
+    // Process moves.
+    for (auto i = blankIndex + 1; i < input.size(); ++i) {
+        auto tokens = Utilities::splitString(input[i], ' ');
+        auto amount = stoi(tokens[1]);
+        auto from = stoi(tokens[3]) - 1;
+        auto to = stoi(tokens[5]) - 1;
+
+        auto crates = vector<char>{};
+        while (amount-- > 0) {
+            auto crate = stacks[from].top();
+            stacks[from].pop();
+            crates.emplace_back(crate);
+        }
+
+        reverse(crates.begin(), crates.end());
+
+        for (const auto& crate : crates) {
+            stacks[to].push(crate);
+        }
+    }
+
+    // Access the top elements.
+    string result = "";
+    for (const auto& currentStack : stacks) {
+        result += currentStack.top();
+    }
+
+    return result;
+
+
 }
 
 

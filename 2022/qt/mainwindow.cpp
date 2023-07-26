@@ -60,7 +60,8 @@ void MainWindow::execute()
         ui->textEdit->setText(output_text);
         break;
     case 5:
-        output_text = output_text.arg(QString::fromStdString(AoC.day_05_1()));
+        output_text = part == 1 ? output_text.arg(QString::fromStdString(AoC.day_05_1())) :
+                         "My code has really weird behaviour during running\n" + output_text.arg(QString::fromStdString(AoC.day_05_2()));
         ui->textEdit->setText(output_text);
         break;
     case 6:
