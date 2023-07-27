@@ -695,15 +695,12 @@ int AoC2022::day_08_1()
     }
 
     // Algorithm for checking if some tree is visible
-    auto test = vector<int>{};
-
     auto columnSize = treeMap.size() - 1;
     for (int i = 0; i <= columnSize; i++) {
         auto rowSize = treeMap[i].size() - 1;
         for (int j = 0; j <= rowSize; j++) {
             if (i == 0 || j == 0 || i == columnSize || j == rowSize) {
                 visibleTreesSum++;
-                // test.push_back(treeMap[i][j]);
                 continue;
             }
 
@@ -736,33 +733,32 @@ int AoC2022::day_08_1()
             }
 
             // Checking the if the tree is visible from the TOP side
-            // auto topTrees = i;
-            // treeCounter = 0;
-            // for (int k = 0; k < topTrees; ++k) {
-                // if (treeMap[i][j] > treeMap[k][j]) {
-                    // treeCounter++;
-                // }
-            // }
+            auto topTrees = i;
+            treeCounter = 0;
+            for (int k = 0; k < topTrees; ++k) {
+                if (treeMap[i][j] > treeMap[k][j]) {
+                    treeCounter++;
+                }
+            }
 
-            // if (treeCounter == topTrees) {
-                // test.push_back(treeMap[i][j]);
-                // visibleTreesSum++;
-                // continue;
-            // }
+            if (treeCounter == topTrees) {
+                visibleTreesSum++;
+                continue;
+            }
 
-            // // Checking the if the tree is visible from the BOTTOM side
-            // auto bottomTree = i + 1;
-            // auto treeCounter = 0;
-            // for (int k = bottomTree; k <= columnSize; ++k) {
-                // if (treeMap[i][j] > treeMap[k][j]) {
-                    // treeCounter++;
-                // }
-            // }
+            // Checking the if the tree is visible from the BOTTOM side
+            auto bottomTree = i;
+            treeCounter = 0;
+            for (int k = bottomTree + 1; k <= columnSize; ++k) {
+                if (treeMap[i][j] > treeMap[k][j]) {
+                    treeCounter++;
+                }
+            }
 
-            // if (treeCounter ==  columnSize - bottomTree) {
-                // visibleTreesSum++;
-                // continue;
-            // }
+            if (treeCounter ==  columnSize - bottomTree) {
+                visibleTreesSum++;
+                continue;
+            }
         }
     }
 
