@@ -42,6 +42,8 @@ AoC2022::AoC2022()
 
     int day_07_1(void);
     int day_07_2(void);
+
+    int day_08_1(void);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -597,7 +599,8 @@ void readInput7()
 
 }
 
-int CalculateDirectorySize(ElfDirectory& directory) {
+int CalculateDirectorySize(ElfDirectory& directory)
+{
     if (directory.size >= 0) {
         return directory.size;
     }
@@ -614,7 +617,8 @@ int CalculateDirectorySize(ElfDirectory& directory) {
     return directory.size;
 }
 
-int AoC2022::day_07_1() {
+int AoC2022::day_07_1()
+{
     readInput7();
     CalculateDirectorySize(all_directories.at("/"));
 
@@ -627,7 +631,8 @@ int AoC2022::day_07_1() {
     return total_dir_size;
 }
 
-int AoC2022::day_07_2() {
+int AoC2022::day_07_2()
+{
     // Read the input and calculate the size of directories
     readInput7();
     CalculateDirectorySize(all_directories.at("/"));
@@ -660,6 +665,131 @@ int AoC2022::day_07_2() {
 
     return deleted_directory_size;
 }
+
+
+// Consider your map; how many trees are visible from outside the grid?
+int AoC2022::day_08_1()
+{
+    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_08.txt");
+
+    auto treeMap = vector<vector<int>>{};
+    auto visibleTreesSum = 0;
+
+    // Putting input data into treeMap
+    for (int i = 0; i < input.size(); ++i) {
+        auto row = vector<int>{};
+        for (int j = 0; j < input[i].length(); ++j) {
+            row.push_back(stoi(input[i].substr(j, 1))); //treeMap[i][j] =
+        }
+        treeMap.push_back(row);
+    }
+
+    // Writting out treeMap
+    QTextStream qout(stdout);
+    for (int i = 0; i < treeMap.size(); ++i) {
+        for (int j = 0; j < treeMap[i].size(); ++j) {
+            qout << treeMap[i][j];
+            qout << " ";
+        }
+        qout << " \n";
+    }
+
+    // Algorithm for checking if some tree is visible
+    auto test = vector<int>{};
+
+    auto columnSize = treeMap.size() - 1;
+    for (int i = 0; i <= columnSize; i++) {
+        auto rowSize = treeMap[i].size() - 1;
+        for (int j = 0; j <= rowSize; j++) {
+            if (i == 0 || j == 0 || i == columnSize || j == rowSize) {
+                visibleTreesSum++;
+                // test.push_back(treeMap[i][j]);
+                continue;
+            }
+
+            // Checking the if the tree is visible from the LEFT side
+            auto leftSideTrees = j;
+            auto treeCounter = 0;
+            for (int k = 0; k < leftSideTrees; ++k) {
+                if (treeMap[i][j] > treeMap[i][k]) {
+                    treeCounter++;
+                }
+            }
+
+            if (treeCounter == leftSideTrees) {
+                visibleTreesSum++;
+                continue;
+            }
+
+            // Checking the if the tree is visible from the RIGHT side
+            auto rightSideTrees = j + 1;
+            treeCounter = 0;
+            for (int k = rightSideTrees; k <= rowSize; ++k) {
+                if (treeMap[i][j] > treeMap[i][k]) {
+                    treeCounter++;
+                }
+            }
+
+            if (treeCounter == rowSize - rightSideTrees + 1) {
+                visibleTreesSum++;
+                continue;
+            }
+
+            // Checking the if the tree is visible from the TOP side
+            // auto topTrees = i;
+            // treeCounter = 0;
+            // for (int k = 0; k < topTrees; ++k) {
+                // if (treeMap[i][j] > treeMap[k][j]) {
+                    // treeCounter++;
+                // }
+            // }
+
+            // if (treeCounter == topTrees) {
+                // test.push_back(treeMap[i][j]);
+                // visibleTreesSum++;
+                // continue;
+            // }
+
+            // // Checking the if the tree is visible from the BOTTOM side
+            // auto bottomTree = i + 1;
+            // auto treeCounter = 0;
+            // for (int k = bottomTree; k <= columnSize; ++k) {
+                // if (treeMap[i][j] > treeMap[k][j]) {
+                    // treeCounter++;
+                // }
+            // }
+
+            // if (treeCounter ==  columnSize - bottomTree) {
+                // visibleTreesSum++;
+                // continue;
+            // }
+        }
+    }
+
+
+    return visibleTreesSum;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
