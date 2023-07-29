@@ -807,34 +807,37 @@ int AoC2022::day_08_2()
                 continue;
             }
 
+            auto current = treeMap[i][j];
+
             // Checking the what is the scenic score from LEFT
-            auto leftSideTree = j - 1;
-            int k;
-            for (k = leftSideTree; k >= 0 && treeMap[i][j] > treeMap[i][k]; --k) { }
-            if (treeMap[i][j] == treeMap[i][k] && k == leftSideTree) {
-                --k;
+            auto visibleLeft = 0;
+            for (auto k = j - 1; k >= 0 ; --k) {
+                ++visibleLeft;
+                if (treeMap[i][k] >= current) { break; }
             }
-            auto left = k < 0 ? j : j - k;
 
             // Checking the what is the scenic score from RIGHT
-            auto rightSideTree = j + 1;
-            for (k = rightSideTree; k <= rowSize && treeMap[i][j] > treeMap[i][k]; ++k) { }
-            if (treeMap[i][j] == treeMap[i][k] && k == rightSideTree) {
-                ++k;
+            auto visibleRight = 0;
+            for (auto k = j + 1; k <= rowSize ; ++k) {
+                ++visibleRight;
+                if (treeMap[i][k] >= current) { break; }
             }
-            auto right = (k - 1) - j;
 
             // Checking the what is the scenic score from TOP
-            auto topTree = i - 1;
-            for (k = topTree; k >= 0 && treeMap[i][j] > treeMap[k][j]; --k) { }
-            auto top = k < 0 ? i : i - k;
+            auto visibleTop = 0;
+            for (auto k = i - 1; k >= 0 ; --k) {
+                ++visibleTop;
+                if (treeMap[k][j] >= current) { break; }
+            }
 
             // Checking the what is the scenic score from BOTTOM
-            auto bottomTree = i + 1;
-            for (k = bottomTree; k <= columnSize && treeMap[i][j] > treeMap[k][j]; ++k) { }
-            auto bottom = k - i;
+            auto visibleBottom = 0;
+            for (auto k = i + 1; k <= columnSize ; ++k) {
+                ++visibleBottom;
+                if (treeMap[k][j] >= current) { break; }
+            }
 
-            scenicScore *= left * right * top * bottom;
+            scenicScore *= visibleLeft * visibleRight * visibleTop * visibleBottom;
 
             if (scenicScore > highestScenicScore) {
                     highestScenicScore = scenicScore;
