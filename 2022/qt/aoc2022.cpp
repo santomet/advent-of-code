@@ -44,6 +44,7 @@ AoC2022::AoC2022()
     int day_07_2(void);
 
     int day_08_1(void);
+    int day_08_2(void);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -685,14 +686,14 @@ int AoC2022::day_08_1()
     }
 
     // Writting out treeMap
-    QTextStream qout(stdout);
-    for (int i = 0; i < treeMap.size(); ++i) {
-        for (int j = 0; j < treeMap[i].size(); ++j) {
-            qout << treeMap[i][j];
-            qout << " ";
-        }
-        qout << " \n";
-    }
+    // QTextStream qout(stdout);
+    // for (int i = 0; i < treeMap.size(); ++i) {
+        // for (int j = 0; j < treeMap[i].size(); ++j) {
+            // qout << treeMap[i][j];
+            // qout << " ";
+        // }
+        // qout << " \n";
+    // }
 
     // Algorithm for checking if some tree is visible
     auto columnSize = treeMap.size() - 1;
@@ -766,6 +767,86 @@ int AoC2022::day_08_1()
     return visibleTreesSum;
 }
 
+// Consider each tree on your map.
+    // What is the highest scenic score possible for any tree?
+// 273615
+// 291856
+int AoC2022::day_08_2()
+{
+    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_08.txt");
+
+    auto treeMap = vector<vector<int>>{};
+    auto highestScenicScore = 1;
+    auto scenicScore = 1;
+
+    // Putting input data into treeMap
+    for (int i = 0; i < input.size(); ++i) {
+        auto row = vector<int>{};
+        for (int j = 0; j < input[i].length(); ++j) {
+            row.push_back(stoi(input[i].substr(j, 1))); //treeMap[i][j] =
+        }
+        treeMap.push_back(row);
+    }
+
+    // Writting out treeMap
+    QTextStream qout(stdout);
+    for (int i = 0; i < treeMap.size(); ++i) {
+        for (int j = 0; j < treeMap[i].size(); ++j) {
+            qout << treeMap[i][j];
+            qout << " ";
+        }
+        qout << " \n";
+    }
+
+    // Algorithm for checking for the highest scenic score
+    auto columnSize = treeMap.size() - 1;
+    for (int i = 0; i <= columnSize; i++) {
+        auto rowSize = treeMap[i].size() - 1;
+        for (int j = 0; j <= rowSize; j++) {
+            if (i == 0 || j == 0 || i == columnSize || j == rowSize) {
+                continue;
+            }
+
+            // Checking the what is the scenic score from LEFT
+            auto leftSideTree = j - 1;
+            int k;
+            for (k = leftSideTree; k >= 0 && treeMap[i][j] > treeMap[i][k]; --k) { }
+            if (treeMap[i][j] == treeMap[i][k] && k == leftSideTree) {
+                --k;
+            }
+            auto left = k < 0 ? j : j - k;
+
+            // Checking the what is the scenic score from RIGHT
+            auto rightSideTree = j + 1;
+            for (k = rightSideTree; k <= rowSize && treeMap[i][j] > treeMap[i][k]; ++k) { }
+            if (treeMap[i][j] == treeMap[i][k] && k == rightSideTree) {
+                ++k;
+            }
+            auto right = (k - 1) - j;
+
+            // Checking the what is the scenic score from TOP
+            auto topTree = i - 1;
+            for (k = topTree; k >= 0 && treeMap[i][j] > treeMap[k][j]; --k) { }
+            auto top = k < 0 ? i : i - k;
+
+            // Checking the what is the scenic score from BOTTOM
+            auto bottomTree = i + 1;
+            for (k = bottomTree; k <= columnSize && treeMap[i][j] > treeMap[k][j]; ++k) { }
+            auto bottom = k - i;
+
+            scenicScore *= left * right * top * bottom;
+
+            if (scenicScore > highestScenicScore) {
+                    highestScenicScore = scenicScore;
+            }
+
+            scenicScore = 1;
+        }
+    }
+
+
+    return highestScenicScore;
+}
 
 
 
