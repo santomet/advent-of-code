@@ -45,6 +45,8 @@ AoC2022::AoC2022()
 
     int day_08_1(void);
     int day_08_2(void);
+
+    int day_09_1(void);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -769,8 +771,6 @@ int AoC2022::day_08_1()
 
 // Consider each tree on your map.
     // What is the highest scenic score possible for any tree?
-// 273615
-// 291856
 int AoC2022::day_08_2()
 {
     auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_08.txt");
@@ -789,14 +789,14 @@ int AoC2022::day_08_2()
     }
 
     // Writting out treeMap
-    QTextStream qout(stdout);
-    for (int i = 0; i < treeMap.size(); ++i) {
-        for (int j = 0; j < treeMap[i].size(); ++j) {
-            qout << treeMap[i][j];
-            qout << " ";
-        }
-        qout << " \n";
-    }
+    // QTextStream qout(stdout);
+    // for (int i = 0; i < treeMap.size(); ++i) {
+        // for (int j = 0; j < treeMap[i].size(); ++j) {
+            // qout << treeMap[i][j];
+            // qout << " ";
+        // }
+        // qout << " \n";
+    // }
 
     // Algorithm for checking for the highest scenic score
     auto columnSize = treeMap.size() - 1;
@@ -852,6 +852,43 @@ int AoC2022::day_08_2()
 }
 
 
+// Simulate your complete hypothetical series of motions.
+    // How many positions does the tail of the rope visit at least once?
+int AoC2022::day_09_1()
+{
+    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_09.txt");
+
+    // auto grid = vector<vector<char>>{};
+    vector<vector<char>> grid(100, vector<char>(100, '*'));
+
+    // Starting point
+    grid[grid.size() - 1].at(0) = 's';
+
+    // Writting out grid
+    QTextStream qout(stdout);
+    for (int i = 0; i < grid.size(); ++i) {
+        for (int j = 0; j < grid[i].size(); ++j) {
+            qout << grid[i][j];
+            qout << " ";
+        }
+        qout << " \n";
+    }
+
+    for (auto i = 0; i < input.size(); ++i) {
+        auto tokens = Utilities::splitString(input[i], ' ');
+        auto direction = tokens[0];
+        auto stepCount = tokens[1];
+
+        if (direction == "U") {
+        } else if (direction == "D") {
+        } else if (direction == "L") {
+        } else if (direction == "R") {
+        }
+
+    }
+
+    return 0;
+}
 
 
 

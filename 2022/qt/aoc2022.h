@@ -38,6 +38,8 @@ public:
     int day_08_1(void);
     int day_08_2(void);
 
+    int day_09_1(void);
+
 private:
 };
 
