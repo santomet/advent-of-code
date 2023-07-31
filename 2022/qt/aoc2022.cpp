@@ -47,6 +47,8 @@ AoC2022::AoC2022()
     int day_08_2(void);
 
     int day_09_1(void);
+
+    int day_10_1(void);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -852,19 +854,8 @@ int AoC2022::day_08_2()
 }
 
 
-// Simulate your complete hypothetical series of motions.
-    // How many positions does the tail of the rope visit at least once?
-int AoC2022::day_09_1()
+void printGrid(vector<vector<char>> grid)
 {
-    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_09.txt");
-
-    // auto grid = vector<vector<char>>{};
-    vector<vector<char>> grid(100, vector<char>(100, '*'));
-
-    // Starting point
-    grid[grid.size() - 1].at(0) = 's';
-
-    // Writting out grid
     QTextStream qout(stdout);
     for (int i = 0; i < grid.size(); ++i) {
         for (int j = 0; j < grid[i].size(); ++j) {
@@ -873,16 +864,69 @@ int AoC2022::day_09_1()
         }
         qout << " \n";
     }
+    qout << " \n";
+}
 
-    for (auto i = 0; i < input.size(); ++i) {
-        auto tokens = Utilities::splitString(input[i], ' ');
+bool isHeadAround(vector<vector<char>> grid, int iTail, int jTail)
+{
+    for (auto i = 0; i < iTail - 1; ++i) {
+        for (auto j = 0; j < grid.size() - 1 - j; ++j) {
+
+        }
+    }
+
+
+    return true;
+}
+// Simulate your complete hypothetical series of motions.
+    // How many positions does the tail of the rope visit at least once?
+int AoC2022::day_09_1()
+{
+    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_09.txt");
+
+    // auto grid = vector<vector<char>>{};
+    // vector<vector<char>> grid(10, vector<char>(10, '*'));
+    vector<vector<char>> grid(8, vector<char>(8, '*'));
+    vector<vector<char>> grid2(8, vector<char>(8, '*'));
+
+    // Starting point
+    grid[grid.size() - 1].at(0) = 's';
+
+    // Keeping track of H and T indexes
+    auto iTail = grid.size();
+    auto jTail = 0;
+    auto iHead = grid.size();
+    auto jHead = 0;
+
+    for (auto index = 0; index < input.size(); ++index) {
+        auto tokens = Utilities::splitString(input[index], ' ');
         auto direction = tokens[0];
-        auto stepCount = tokens[1];
+        auto stepCount = stoi(tokens[1]);
 
         if (direction == "U") {
+            for (auto i = 1; i <= stepCount; ++i) {
+                grid[iHead - 1].at(jHead) = 'H';
+                iHead--;
+                printGrid(grid);
+            }
         } else if (direction == "D") {
+            for (auto i = 1; i <= stepCount; ++i) {
+                grid[iHead + 1].at(jHead) = 'H';
+                iHead++;
+                printGrid(grid);
+            }
         } else if (direction == "L") {
+            for (auto i = 1; i <= stepCount; ++i) {
+                grid[iHead].at(jHead - 1) = 'H';
+                jHead--;
+                printGrid(grid);
+            }
         } else if (direction == "R") {
+            for (auto i = 1; i <= stepCount; ++i) {
+                grid[iHead - 1].at(jHead + 1) = 'H';
+                jHead++;
+                printGrid(grid);
+            }
         }
 
     }
@@ -891,6 +935,25 @@ int AoC2022::day_09_1()
 }
 
 
+int AoC2022::day_10_1()
+{
+    // auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_08.txt");
+
+    // auto treeMap = vector<vector<int>>{};
+    // auto highestScenicScore = 1;
+    // auto scenicScore = 1;
+
+    // // Putting input data into treeMap
+    // for (int i = 0; i < input.size(); ++i) {
+        // auto row = vector<int>{};
+        // for (int j = 0; j < input[i].length(); ++j) {
+            // row.push_back(stoi(input[i].substr(j, 1))); //treeMap[i][j] =
+        // }
+        // treeMap.push_back(row);
+    // }
+    //
+    // return 0;
+}
 
 
 

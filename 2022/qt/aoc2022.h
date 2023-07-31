@@ -40,6 +40,8 @@ public:
 
     int day_09_1(void);
 
+    int day_10_1(void);
+
 private:
 };
 
