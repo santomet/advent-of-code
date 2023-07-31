@@ -878,6 +878,7 @@ bool isHeadAround(vector<vector<char>> grid, int iTail, int jTail)
 
     return true;
 }
+
 // Simulate your complete hypothetical series of motions.
     // How many positions does the tail of the rope visit at least once?
 int AoC2022::day_09_1()
@@ -935,56 +936,36 @@ int AoC2022::day_09_1()
 }
 
 
-int wantedSignalStrengthes(int cycle, int x, int *signalStrenght) {
-    if (cycle == 20 || cycle == 60 || cycle == 100
-        || cycle == 140 || cycle == 180 || cycle == 220) {
-        signalStrenght += cycle * x;
-    }
-
-    return *signalStrenght;
-}
-
-
+// Find the signal strength during the 20th, 60th, 100th, 140th, 180th, and 220th cycles.
+    // What is the sum of these six signal strengths?
 int AoC2022::day_10_1()
 {
     auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_10.txt");
 
-    auto cycle = 0;
     auto x = 1;
-    auto signalStrenght = 0;
+    auto signalStrength = 0;
 
-    // auto allValues = vector<int>{};
+    auto values = vector<int>{};
 
     for (auto i = 0; i < input.size() - 1; ++i) {
         auto tokens = Utilities::splitString(input[i], ' ');
 
-        if (cycle == 20 || cycle == 60 || cycle == 100
-            || cycle == 140 || cycle == 180 || cycle == 220) {
-            signalStrenght += cycle * x;
-        }
-
         if (tokens.size() == 1) {
-            cycle++;
+            values.emplace_back(x);
             continue;
         }
 
-        for (auto j = 0; j < 2; ++j) {
-            if (cycle == 20 || cycle == 60 || cycle == 100
-                || cycle == 140 || cycle == 180 || cycle == 220) {
-                signalStrenght += cycle * x;
-            }
-            cycle++;
-        }
-
-        // if (cycle == 20 || cycle == 60 || cycle == 100
-            // || cycle == 140 || cycle == 180 || cycle == 220) {
-            // signalStrenght += cycle * x;
-        // }
+        values.emplace_back(x);
+        values.emplace_back(x);
         auto num = stoi(tokens[1]);
         x += num;
     }
 
-    return signalStrenght;
+    for (int index = 20; index <= 220; index += 40) {
+        signalStrength += index * values[index - 1];
+    }
+
+    return signalStrength;
 }
 
 
