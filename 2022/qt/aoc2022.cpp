@@ -935,24 +935,56 @@ int AoC2022::day_09_1()
 }
 
 
+int wantedSignalStrengthes(int cycle, int x, int *signalStrenght) {
+    if (cycle == 20 || cycle == 60 || cycle == 100
+        || cycle == 140 || cycle == 180 || cycle == 220) {
+        signalStrenght += cycle * x;
+    }
+
+    return *signalStrenght;
+}
+
+
 int AoC2022::day_10_1()
 {
-    // auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_08.txt");
+    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_10.txt");
 
-    // auto treeMap = vector<vector<int>>{};
-    // auto highestScenicScore = 1;
-    // auto scenicScore = 1;
+    auto cycle = 0;
+    auto x = 1;
+    auto signalStrenght = 0;
 
-    // // Putting input data into treeMap
-    // for (int i = 0; i < input.size(); ++i) {
-        // auto row = vector<int>{};
-        // for (int j = 0; j < input[i].length(); ++j) {
-            // row.push_back(stoi(input[i].substr(j, 1))); //treeMap[i][j] =
+    // auto allValues = vector<int>{};
+
+    for (auto i = 0; i < input.size() - 1; ++i) {
+        auto tokens = Utilities::splitString(input[i], ' ');
+
+        if (cycle == 20 || cycle == 60 || cycle == 100
+            || cycle == 140 || cycle == 180 || cycle == 220) {
+            signalStrenght += cycle * x;
+        }
+
+        if (tokens.size() == 1) {
+            cycle++;
+            continue;
+        }
+
+        for (auto j = 0; j < 2; ++j) {
+            if (cycle == 20 || cycle == 60 || cycle == 100
+                || cycle == 140 || cycle == 180 || cycle == 220) {
+                signalStrenght += cycle * x;
+            }
+            cycle++;
+        }
+
+        // if (cycle == 20 || cycle == 60 || cycle == 100
+            // || cycle == 140 || cycle == 180 || cycle == 220) {
+            // signalStrenght += cycle * x;
         // }
-        // treeMap.push_back(row);
-    // }
-    //
-    // return 0;
+        auto num = stoi(tokens[1]);
+        x += num;
+    }
+
+    return signalStrenght;
 }
 
 
