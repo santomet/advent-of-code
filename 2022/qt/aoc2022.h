@@ -41,6 +41,7 @@ public:
     int day_09_1(void);
 
     int day_10_1(void);
+    string day_10_2(void);
 
 private:
 };

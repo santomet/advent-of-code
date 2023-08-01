@@ -49,6 +49,7 @@ AoC2022::AoC2022()
     int day_09_1(void);
 
     int day_10_1(void);
+    string day_10_2(void);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -968,6 +969,64 @@ int AoC2022::day_10_1()
     return signalStrength;
 }
 
+// Render the image given by your program.
+    // What eight capital letters appear on your CRT?
+string AoC2022::day_10_2()
+{
+    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_10.txt");
+
+    vector<vector<string>> crtScreen(7, vector<string>(41, " "));
+
+    auto x = 1;
+    auto signalStrength = 0;
+
+    auto values = vector<int>{};
+
+    for (auto i = 0; i < input.size() - 1; ++i) {
+        auto tokens = Utilities::splitString(input[i], ' ');
+
+        if (tokens.size() == 1) {
+            values.emplace_back(x);
+            continue;
+        }
+
+        values.emplace_back(x);
+        values.emplace_back(x);
+        auto num = stoi(tokens[1]);
+        x += num;
+    }
+
+    auto crtPosition = 0;
+    auto k = 0;
+    for (auto i = 0; i < crtScreen.size() - 1; ++i) {
+        for (auto j = 0; j < crtScreen[i].size() - 1; ++j) {
+            auto sprite = values[k];
+            if (crtPosition == sprite - 1 || crtPosition == sprite
+                || crtPosition == sprite + 1) {
+                crtScreen[i].at(j) = "#";
+            } else {
+                crtScreen[i].at(j) = ".";
+            }
+
+            crtPosition++;
+            k++;
+        }
+        crtPosition -= 40;
+    }
+
+    // Printing the result to Terminal
+        // TODO: print it in the output of the application
+    QTextStream qout(stdout);
+    for (int i = 0; i < crtScreen.size(); ++i) {
+        for (int j = 0; j < crtScreen[i].size(); ++j) {
+            qout << QString::fromStdString(crtScreen[i][j]);
+            // qout << " ";
+        }
+        qout << " \n";
+    }
+
+    return "PCPBKAPJ";
+}
 
 
 
