@@ -43,6 +43,8 @@ public:
     int day_10_1(void);
     string day_10_2(void);
 
+    int day_11_1(void);
+
 private:
 };
 

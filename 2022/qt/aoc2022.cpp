@@ -13,6 +13,7 @@
 #include <unordered_map>
 #include <numeric>
 #include <stack>
+#include <map>
 
 #include <QTextStream>
 #include <QString>
@@ -50,6 +51,8 @@ AoC2022::AoC2022()
 
     int day_10_1(void);
     string day_10_2(void);
+
+    int day_11_1(void);
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -1026,6 +1029,71 @@ string AoC2022::day_10_2()
     }
 
     return "PCPBKAPJ";
+}
+
+
+struct Monkey
+{
+    int id;
+    vector<int> items;
+    int operationNum;
+    int trueCase;
+    int falseCase;
+};
+
+int AoC2022::day_11_1()
+{
+    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_11.txt");
+
+    // auto monkeyMap = map<int, vector<int>>{};
+    auto businessMap = map<int, int>{};
+    auto businessLevel = 0;
+    auto monkey = vector<Monkey>{};
+
+    QTextStream qout(stdout);
+
+    // Parsing input
+    for (auto i = 0; i < input.size() - 1; i += 7) {
+
+        auto idLine = Utilities::splitString(input[i], ' ');
+        monkey[i].id = stoi(idLine[1].substr(0, 1));
+
+        auto items = Utilities::splitString(input[i + 1], ' ');
+
+        for (auto j = 4; j < items.size(); ++j) {
+            // monkeyMap[idLine].push_back(stoi(items[j].substr(0, 2)));
+            monkey[i].items.push_back(stoi(items[j].substr(0, 2)));
+        }
+
+
+        auto operation = Utilities::splitString(input[i + 2], ' ');
+        auto test = Utilities::splitString(input[i + 3], ' ');
+
+        auto trueCaseLine = Utilities::splitString(input[i + 4], ' ');
+        auto trueCase = trueCaseLine[5];
+
+        auto falseCaseLine = Utilities::splitString(input[i + 5], ' ');
+        auto falseCase = falseCaseLine[5];
+    }
+
+    for (auto i = 0; i < monkey.size(); ++i) {
+        qout << i << ": ";
+        for (auto j = 0; j <monkey[i].items.size(); ++j) {
+            qout << monkey[i].items[j] << ", ";
+        }
+        qout << "\n";
+    }
+
+    // for (const auto& elem : monkeyMap) {
+        // qout << elem.first << ": ";
+        // for (auto i = 0; i < elem.second.size(); ++i) {
+            // qout <<  elem.second[i] << ", ";
+        // }
+        // qout << "\n";
+    // }
+
+
+    return businessLevel;
 }
 
 

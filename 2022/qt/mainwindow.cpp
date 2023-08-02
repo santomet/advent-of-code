@@ -17,7 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 
-    ui->comboBox->addItems({"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"});
+    ui->comboBox->addItems({"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+                            "11"});
     // gb.setLayout(ui->radioButtonLayout);
 
     connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::execute);
@@ -77,11 +78,14 @@ void MainWindow::execute()
         ui->textEdit->setText(output_text);
         break;
     case 9:
-        // output_text = output_text.arg(AoC.day_09_1());
         ui->textEdit->setText("NOT SOLVED YET");
         break;
     case 10:
         output_text = part == 1 ? output_text.arg(AoC.day_10_1()) : output_text.arg(QString::fromStdString(AoC.day_10_2()));
+        ui->textEdit->setText(output_text);
+        break;
+    case 11:
+        output_text = output_text.arg(AoC.day_11_1());
         ui->textEdit->setText(output_text);
         break;
     default:
