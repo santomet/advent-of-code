@@ -1032,65 +1032,66 @@ string AoC2022::day_10_2()
 }
 
 
-struct Monkey
+typedef struct _monkey
 {
     int id;
     vector<int> items;
-    int operationNum;
+    vector<string> operation;
+    int testNum;
     int trueCase;
     int falseCase;
-};
+} Monkey;
 
 int AoC2022::day_11_1()
 {
     auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_11.txt");
 
-    // auto monkeyMap = map<int, vector<int>>{};
-    auto businessMap = map<int, int>{};
+    auto monkeyMap = map<int, vector<int>>{};
+    auto bussinessMap = map<int, int>{};
     auto businessLevel = 0;
-    auto monkey = vector<Monkey>{};
+    // auto monkeys = vector<Monkey>{};
+    vector<Monkey> monkeys;
+    // Monkey m;
 
     QTextStream qout(stdout);
 
     // Parsing input
     for (auto i = 0; i < input.size() - 1; i += 7) {
+        Monkey monkey;
 
         auto idLine = Utilities::splitString(input[i], ' ');
-        monkey[i].id = stoi(idLine[1].substr(0, 1));
+        monkey.id = stoi(idLine[1].substr(0, 1));
 
         auto items = Utilities::splitString(input[i + 1], ' ');
-
         for (auto j = 4; j < items.size(); ++j) {
-            // monkeyMap[idLine].push_back(stoi(items[j].substr(0, 2)));
-            monkey[i].items.push_back(stoi(items[j].substr(0, 2)));
+            monkey.items.push_back(stoi(items[j].substr(0, 2)));
         }
 
-
         auto operation = Utilities::splitString(input[i + 2], ' ');
+        for (auto j = 5; j < operation.size(); ++j) {
+            monkey.operation.push_back(operation[j]);
+        }
+
         auto test = Utilities::splitString(input[i + 3], ' ');
+        monkey.testNum = stoi(test[5]);
 
         auto trueCaseLine = Utilities::splitString(input[i + 4], ' ');
-        auto trueCase = trueCaseLine[5];
+        monkey.trueCase = stoi(trueCaseLine[9]);
 
         auto falseCaseLine = Utilities::splitString(input[i + 5], ' ');
-        auto falseCase = falseCaseLine[5];
+        monkey.falseCase = stoi(falseCaseLine[9]);
+
+        monkeys.push_back(monkey);
     }
 
-    for (auto i = 0; i < monkey.size(); ++i) {
+
+    for (auto i = 0; i < monkeys.size(); ++i) {
         qout << i << ": ";
-        for (auto j = 0; j <monkey[i].items.size(); ++j) {
-            qout << monkey[i].items[j] << ", ";
+        for (auto j = 0; j <monkeys[i].items.size(); ++j) {
+            qout << monkeys[i].items[j] << ", ";
         }
         qout << "\n";
     }
-
-    // for (const auto& elem : monkeyMap) {
-        // qout << elem.first << ": ";
-        // for (auto i = 0; i < elem.second.size(); ++i) {
-            // qout <<  elem.second[i] << ", ";
-        // }
-        // qout << "\n";
-    // }
 
 
     return businessLevel;
@@ -1127,5 +1128,15 @@ int AoC2022::day_11_1()
 
 
 
+
+
+
+    // for (const auto& elem : monkeyMap) {
+        // qout << elem.first << ": ";
+        // for (auto i = 0; i < elem.second.size(); ++i) {
+            // qout <<  elem.second[i] << ", ";
+        // }
+        // qout << "\n";
+    // }
 
 
