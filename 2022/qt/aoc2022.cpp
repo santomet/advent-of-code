@@ -26,11 +26,11 @@ AoC2022::AoC2022()
     int day_01_1(QString input);
     int day_01_2(QString input);
 
-    int day_02_1(void);
-    int day_02_2(void);
+    int day_02_1(QString input);
+    int day_02_2(QString input);
 
-    int day_03_1(void);
-    int day_03_2(void);
+    int day_03_1(QString input);
+    int day_03_2(QString input);
 
     int day_04_1(void);
     int day_04_2(void);
@@ -54,11 +54,6 @@ AoC2022::AoC2022()
 
     int day_11_1(void);
 
-    QString test(QString input);
-}
-
-QString AoC2022::test(QString input) {
-    return input;
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
@@ -120,15 +115,14 @@ int AoC2022::day_01_2(QString input)
 
 
 // What would your total score be if everything goes exactly according to your strategy guide?
-int AoC2022::day_02_1()
+int AoC2022::day_02_1(QString input)
 {
-    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_02.txt");
-    if (!file.is_open()) return -1;
+    auto data = Utilities::splitQStringByNewline(input);
 
     string line, elf_choice, elf_suggestion;
     int score = 0;
 
-    while (getline(file, line)) {
+    for (const auto& line : data) {
         elf_choice = line.substr(0, 1); // strtok_r(line, " , "); --- didn't work out
         elf_suggestion = line.substr(2, 1);
 
@@ -168,15 +162,14 @@ int AoC2022::day_02_1()
 
 // Following the Elf's instructions for the second column,
 //      what would your total score be if everything goes exactly according to your strategy guide?
-int AoC2022::day_02_2()
+int AoC2022::day_02_2(QString input)
 {
-    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_02.txt");
-    if (!file.is_open()) return -1;
+    auto data = Utilities::splitQStringByNewline(input);
 
     string line, elf_choice, round_end;
     int score = 0;
 
-    while (getline(file, line)) {
+    for (const auto& line : data) {
         elf_choice = line.substr(0, 1);
         round_end = line.substr(2, 1);
 
@@ -212,7 +205,7 @@ int AoC2022::day_02_2()
 
 // Find the item type that appears in both compartments of each rucksack.
     // What is the sum of the priorities of those item types?
-int AoC2022::day_03_1()
+int AoC2022::day_03_1(QString input)
 {
     ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_03.txt");
     if (!file.is_open()) return -1;
@@ -245,7 +238,7 @@ int AoC2022::day_03_1()
 
 // Find the item type that corresponds to the badges of each three-Elf group.
     // What is the sum of the priorities of those item types?
-int AoC2022::day_03_2()
+int AoC2022::day_03_2(QString input)
 {
     ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_03.txt");
     if (!file.is_open()) return -1;

@@ -26,10 +26,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-QString test(QString input) {
-    return input;
-}
-
 void MainWindow::execute()
 {
     AoC2022 AoC;
@@ -47,11 +43,11 @@ void MainWindow::execute()
             ui->textEdit->setText(output_text);
             break;
         case 2:
-            output_text = part == 1 ? output_text.arg(AoC.day_02_1()) : output_text.arg(AoC.day_02_2());
+            output_text = part == 1 ? output_text.arg(AoC.day_02_1(input)) : output_text.arg(AoC.day_02_2(input));
             ui->textEdit->setText(output_text);
             break;
         case 3:
-            output_text = part == 1 ? output_text.arg(AoC.day_03_1()) : output_text.arg(AoC.day_03_2());
+            output_text = part == 1 ? output_text.arg(AoC.day_03_1(input)) : output_text.arg(AoC.day_03_2(input));
             ui->textEdit->setText(output_text);
             break;
         case 4:
