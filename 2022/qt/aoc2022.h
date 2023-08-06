@@ -32,8 +32,8 @@ public:
     int day_06_1(QString input);
     int day_06_2(QString input);
 
-    int day_07_1(void);
-    int day_07_2(void);
+    int day_07_1(QString input);
+    int day_07_2(QString input);
 
     int day_08_1(void);
     int day_08_2(void);

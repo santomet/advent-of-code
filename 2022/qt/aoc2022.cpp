@@ -41,8 +41,8 @@ AoC2022::AoC2022()
     int day_06_1(QString input);
     int day_06_2(QString input);
 
-    int day_07_1(void);
-    int day_07_2(void);
+    int day_07_1(QString input);
+    int day_07_2(QString input);
 
     int day_08_1(void);
     int day_08_2(void);
@@ -550,15 +550,15 @@ struct ElfDirectory
 auto all_directories = unordered_map<string, ElfDirectory>{};
 auto all_files = unordered_map<string, ElfFile>{};
 
-void readInput7()
+void readInput7(QString input)
 {
-    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_07.txt");
+    auto data = Utilities::splitQStringByNewline(input);
 
     all_directories["/"] = ElfDirectory{"/"};
 
     auto pwd = vector<string>{{"/"}};
 
-    for (const auto& line : input) {
+    for (const auto& line : data) {
         auto tokens = Utilities::splitString(line, ' ');
         if (tokens[0] == "$") {
             if (tokens[1] == "ls") {
@@ -615,9 +615,9 @@ int CalculateDirectorySize(ElfDirectory& directory)
     return directory.size;
 }
 
-int AoC2022::day_07_1()
+int AoC2022::day_07_1(QString input)
 {
-    readInput7();
+    readInput7(input);
     CalculateDirectorySize(all_directories.at("/"));
 
     auto total_dir_size = accumulate(all_directories.begin(), all_directories.end(), 0,
@@ -629,10 +629,10 @@ int AoC2022::day_07_1()
     return total_dir_size;
 }
 
-int AoC2022::day_07_2()
+int AoC2022::day_07_2(QString input)
 {
     // Read the input and calculate the size of directories
-    readInput7();
+    readInput7(input);
     CalculateDirectorySize(all_directories.at("/"));
 
     constexpr auto totalSpace = 70000000;
