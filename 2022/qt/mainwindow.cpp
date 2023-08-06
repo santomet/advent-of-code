@@ -30,8 +30,6 @@ void MainWindow::execute()
 {
     AoC2022 AoC;
     // QString input = ui->lineEdit->text();
-    // int i = ui->comboBox->currentIndex();
-    // ui->textEdit->setText("aaa");
 
     QString output_text = "The result is %1 \n";
     int choice = ui->comboBox->currentIndex() + 1;
