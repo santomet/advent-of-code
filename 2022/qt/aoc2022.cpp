@@ -38,8 +38,8 @@ AoC2022::AoC2022()
     string day_05_1(void);
     string day_05_2(void);
 
-    int day_06_1(void);
-    int day_06_2(void);
+    int day_06_1(QString input);
+    int day_06_2(QString input);
 
     int day_07_1(void);
     int day_07_2(void);
@@ -463,18 +463,17 @@ string AoC2022::day_05_2()
 
 
 // How many characters need to be processed before the first start-of-packet marker is detected?
-int AoC2022::day_06_1()
+int AoC2022::day_06_1(QString input)
 {
-    fstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_06.txt");
-    if (!file.is_open()) return -1;
+    auto data = Utilities::splitQStringByNewline(input);
 
-    string input, part;
-    getline(file, input);
+    string line, part;
+    line = data[0];
 
     int i = 0, check = 0;
 
-    LOOP:while (i + 4 < input.length()) {
-        part = input.substr(i, 4);
+    LOOP:while (i + 4 < line.length()) {
+        part = line.substr(i, 4);
 
         for (int j = 0; j < part.length(); j++) {
             for (int k = 0; k < part.length(); k++) {
@@ -497,18 +496,17 @@ int AoC2022::day_06_1()
 }
 
 // How many characters need to be processed before the first start-of-message marker is detected?
-int AoC2022::day_06_2()
+int AoC2022::day_06_2(QString input)
 {
-    fstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_06.txt");
-    if (!file.is_open()) return -1;
+    auto data = Utilities::splitQStringByNewline(input);
 
-    string input, part;
-    getline(file, input);
+    string line, part;
+    line = data[0];
 
     int i = 0, check = 0;
 
-    LOOP:while (i + 14 < input.length()) {
-        part = input.substr(i, 14);
+    LOOP:while (i + 14 < line.length()) {
+        part = line.substr(i, 14);
 
         for (int j = 0; j < part.length(); j++) {
             for (int k = 0; k < part.length(); k++) {
