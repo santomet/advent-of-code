@@ -614,11 +614,11 @@ int CalculateDirectorySize(ElfDirectory& directory)
         return directory.size;
     }
 
-    int totalSizeOfFiles = std::accumulate(directory.child_files.begin(), directory.child_files.end(), 0,
-                                           [](int sum, const std::string& path) { return sum + all_files.at(path).size; });
+    int totalSizeOfFiles = accumulate(directory.child_files.begin(), directory.child_files.end(), 0,
+                                           [](int sum, const string& path) { return sum + all_files.at(path).size; });
 
     int totalSizeOfDirectories = 0;
-    for (const std::string& path : directory.child_directories) {
+    for (const string& path : directory.child_directories) {
         totalSizeOfDirectories += CalculateDirectorySize(all_directories.at(path));
     }
 
@@ -631,8 +631,8 @@ int AoC2022::day_07_1()
     readInput7();
     CalculateDirectorySize(all_directories.at("/"));
 
-    auto total_dir_size = std::accumulate(all_directories.begin(), all_directories.end(), 0,
-                                        [](int sum, const std::pair<std::string, ElfDirectory>& directoryPair) {
+    auto total_dir_size = accumulate(all_directories.begin(), all_directories.end(), 0,
+                                        [](int sum, const pair<std::string, ElfDirectory>& directoryPair) {
                                             const ElfDirectory& directory = directoryPair.second;
                                             return sum + (directory.size <= 100000 ? directory.size : 0);
                                         });

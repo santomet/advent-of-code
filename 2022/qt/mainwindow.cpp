@@ -2,11 +2,6 @@
 #include "./ui_mainwindow.h"
 #include "aoc2022.h"
 
-#include <iostream>
-#include <QString>
-#include <string>
-#include <QTextStream>
-#include <format>
 
 using namespace std;
 
