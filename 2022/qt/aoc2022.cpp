@@ -32,8 +32,8 @@ AoC2022::AoC2022()
     int day_03_1(QString input);
     int day_03_2(QString input);
 
-    int day_04_1(void);
-    int day_04_2(void);
+    int day_04_1(QString input);
+    int day_04_2(QString input);
 
     string day_05_1(void);
     string day_05_2(void);
@@ -207,31 +207,31 @@ int AoC2022::day_02_2(QString input)
     // What is the sum of the priorities of those item types?
 int AoC2022::day_03_1(QString input)
 {
-    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_03.txt");
-    if (!file.is_open()) return -1;
+    auto data = Utilities::splitQStringByNewline(input);
 
     string line, first_compartment, second_compartment;
     int length = 0, priority_sum = 0;
 
-    LOOP:while (getline(file, line)) {
-        length = line.length();
-        first_compartment = line.substr(0, length / 2);
-        second_compartment = line.substr(length / 2, length);
+    // LOOP:for (const auto& line : data) {
+    // LOOP:while (getline(file, line)) {
+        // length = line.length();
+        // first_compartment = line.substr(0, length / 2);
+        // second_compartment = line.substr(length / 2, length);
 
-        for (int i = 0; i < first_compartment.length(); i++) {
-            for (int j = 0; j < first_compartment.length(); j++) {
-                if (first_compartment[i] == second_compartment[j]) {
-                   if (islower(first_compartment[i])) {
-                       priority_sum += first_compartment[i] - 96;
-                       goto LOOP;
-                   }
+        // for (int i = 0; i < first_compartment.length(); i++) {
+            // for (int j = 0; j < first_compartment.length(); j++) {
+                // if (first_compartment[i] == second_compartment[j]) {
+                   // if (islower(first_compartment[i])) {
+                       // priority_sum += first_compartment[i] - 96;
+                       // goto LOOP;
+                   // }
 
-                   priority_sum += first_compartment[i] - 38;
-                   goto LOOP;
-                }
-            }
-        }
-    }
+                   // priority_sum += first_compartment[i] - 38;
+                   // goto LOOP;
+                // }
+            // }
+        // }
+    // }
 
     return priority_sum;
 }
@@ -272,16 +272,15 @@ int AoC2022::day_03_2(QString input)
 
 
 // In how many assignment pairs does one range fully contain the other?
-int AoC2022::day_04_1()
+int AoC2022::day_04_1(QString input)
 {
-    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_04.txt");
-    if (!file.is_open()) return -1;
+    auto data = Utilities::splitQStringByNewline(input);
 
     string line;
     int result = 0, check = 1;
     vector<int> part1, part2;
 
-    while (getline(file, line)) {
+    for (const auto& line : data) {
         vector<string> tokens = Utilities::splitString(line, ',');
 
         for (vector<string>::const_iterator it = tokens.begin(), end_it = tokens.end(); it != end_it; ++it) {
@@ -305,16 +304,15 @@ int AoC2022::day_04_1()
 }
 
 // In how many assignment pairs do the ranges overlap?
-int AoC2022::day_04_2()
+int AoC2022::day_04_2(QString input)
 {
-    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_04.txt");
-    if (!file.is_open()) return -1;
+    auto data = Utilities::splitQStringByNewline(input);
 
     string line;
     int result = 0, check = 1;
     vector<int> part1, part2;
 
-    while (getline(file, line)) {
+    for (const auto& line : data) {
         vector<string> tokens = Utilities::splitString(line, ',');
 
         for (vector<string>::const_iterator it = tokens.begin(), end_it = tokens.end(); it != end_it; ++it) {

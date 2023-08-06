@@ -51,7 +51,7 @@ void MainWindow::execute()
             ui->textEdit->setText(output_text);
             break;
         case 4:
-            output_text = part == 1 ? output_text.arg(AoC.day_04_1()) : output_text.arg(AoC.day_04_2());
+            output_text = part == 1 ? output_text.arg(AoC.day_04_1(input)) : output_text.arg(AoC.day_04_2(input));
             ui->textEdit->setText(output_text);
             break;
         case 5:
@@ -91,10 +91,10 @@ void MainWindow::execute()
     }
 
     // It over-writes the "The result is 0" statement because of an empty input line
-    if (input.isEmpty()) {
-        ui->textEdit->setText("Invalid input! \n"
-                              "Please put valid input into the input line above.");
-    }
+    // if (input.isEmpty()) {
+        // ui->textEdit->setText("Invalid input! \n"
+                              // "Please put valid input into the input line above.");
+    // }
 
 }
 
