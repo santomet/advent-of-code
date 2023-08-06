@@ -7,6 +7,7 @@
 #include <vector>
 #include <sstream>
 #include <limits>
+#include <QString>
 
 using namespace std;
 
@@ -17,6 +18,9 @@ namespace Utilities {
 
     // Reads the provided text file and returns all lines as strings.
     vector<string> readAllLinesInFile(const filesystem::path& path);
+
+    // Reads the user input data and returns them as lines as strings
+    vector<string> splitQStringByNewline(const QString& inputString);
 
     // Crashes the program if the assertion is false
     void verifyElseCrash(bool bAssert);

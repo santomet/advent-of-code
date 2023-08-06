@@ -14,8 +14,8 @@ class AoC2022
 {
 public:
     AoC2022();
-    int day_01_1(void);
-    int day_01_2(void);
+    int day_01_1(QString input);
+    int day_01_2(QString input);
 
     int day_02_1(void);
     int day_02_2(void);
@@ -44,6 +44,7 @@ public:
     string day_10_2(void);
 
     int day_11_1(void);
+    QString test(QString input);
 
 private:
 };

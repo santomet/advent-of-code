@@ -26,10 +26,14 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+QString test(QString input) {
+    return input;
+}
+
 void MainWindow::execute()
 {
     AoC2022 AoC;
-    // QString input = ui->lineEdit->text();
+    QString input = ui->lineEdit->text();
 
     QString output_text = "The result is %1 \n";
     int choice = ui->comboBox->currentIndex() + 1;
@@ -37,7 +41,8 @@ void MainWindow::execute()
 
     switch (choice) {
     case 1:
-        output_text = part == 1 ? output_text.arg(AoC.day_01_1()) : output_text.arg(AoC.day_01_2());
+        output_text = part == 1 ? output_text.arg(AoC.day_01_1(input)) : output_text.arg(AoC.day_01_2(input));
+        // output_text = test(input);
         ui->textEdit->setText(output_text);
 
         break;

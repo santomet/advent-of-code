@@ -42,6 +42,18 @@ namespace Utilities {
         return lines;
     }
 
+    vector<string> splitQStringByNewline(const QString& inputString) {
+        vector<string> result;
+        istringstream iss(inputString.toStdString());
+        string line;
+
+        while (std::getline(iss, line, '\n')) {
+            result.push_back(line);
+        }
+
+        return result;
+    }
+
     void verifyElseCrash(bool bAssert)
     {
         assert(bAssert);

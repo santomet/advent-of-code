@@ -23,8 +23,8 @@ using namespace std;
 
 AoC2022::AoC2022()
 {
-    int day_01_1(void);
-    int day_01_2(void);
+    int day_01_1(QString input);
+    int day_01_2(QString input);
 
     int day_02_1(void);
     int day_02_2(void);
@@ -53,19 +53,24 @@ AoC2022::AoC2022()
     string day_10_2(void);
 
     int day_11_1(void);
+
+    QString test(QString input);
+}
+
+QString AoC2022::test(QString input) {
+    return input;
 }
 
 // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
-int AoC2022::day_01_1()
+int AoC2022::day_01_1(QString input)
 {
-    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_01.txt");
-    if (!file.is_open()) return -1;
+    auto data = Utilities::splitQStringByNewline(input);
 
     string line;
     int max = 0;
     int sum = 0;
 
-    while (getline(file, line)) {
+    for (const auto& line : data) {
         if (line.empty()) {
             if (max < sum) {
                 max = sum;
@@ -76,16 +81,14 @@ int AoC2022::day_01_1()
 
         sum += stoi(line);
     }
-    file.close();
 
     return max;
 }
 
 // Find the top three Elves carrying the most Calories. How many Calories are those Elves carrying in total?
-int AoC2022::day_01_2()
+int AoC2022::day_01_2(QString input)
 {
-    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_01.txt");
-    if (!file.is_open()) return -1;
+    auto data = Utilities::splitQStringByNewline(input);
 
     string line;
     int sum = 0;
@@ -94,7 +97,7 @@ int AoC2022::day_01_2()
     int max2 = 0;
     int max3 = 0;
 
-    while (getline(file, line)) {
+    for (const auto& line : data) {
        if (line.empty()) {
            if (sum > max1) {
                 max3 = max2;
@@ -111,9 +114,6 @@ int AoC2022::day_01_2()
             sum += stoi(line);
         }
     }
-
-
-    file.close();
 
     return (max1 + max2 + max3);
 }
