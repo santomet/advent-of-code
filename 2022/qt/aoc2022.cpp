@@ -47,7 +47,7 @@ AoC2022::AoC2022()
     int day_08_1(QString user_input);
     int day_08_2(QString user_input);
 
-    int day_09_1(void);
+    int day_09_1(QString user_input);
 
     int day_10_1(QString user_input);
     string day_10_2(QString user_input);
@@ -874,9 +874,9 @@ bool isHeadAround(vector<vector<char>> grid, int iTail, int jTail)
 
 // Simulate your complete hypothetical series of motions.
     // How many positions does the tail of the rope visit at least once?
-int AoC2022::day_09_1()
+int AoC2022::day_09_1(QString user_input)
 {
-    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_09.txt");
+    auto input = Utilities::splitQStringByNewline(user_input);
 
     // auto grid = vector<vector<char>>{};
     // vector<vector<char>> grid(10, vector<char>(10, '*'));
