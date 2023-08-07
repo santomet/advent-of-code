@@ -79,7 +79,7 @@ void MainWindow::execute()
             ui->textEdit->setText(output_text);
             break;
         case 11:
-            output_text = output_text.arg(AoC.day_11_1());
+            output_text = output_text.arg(AoC.day_11_1(input));
             ui->textEdit->setText(output_text);
             break;
         default:

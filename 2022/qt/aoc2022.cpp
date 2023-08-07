@@ -52,7 +52,7 @@ AoC2022::AoC2022()
     int day_10_1(QString user_input);
     string day_10_2(QString user_input);
 
-    int day_11_1(void);
+    int day_11_1(QString user_input);
 
 }
 
@@ -1031,9 +1031,9 @@ typedef struct _monkey
     int falseCase;
 } Monkey;
 
-int AoC2022::day_11_1()
+int AoC2022::day_11_1(QString user_input)
 {
-    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_11.txt");
+    auto input = Utilities::splitQStringByNewline(user_input);
 
     auto monkeyMap = map<int, vector<int>>{};
     auto bussinessMap = map<int, int>{};
