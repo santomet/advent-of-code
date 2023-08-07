@@ -35,8 +35,8 @@ AoC2022::AoC2022()
     int day_04_1(QString input);
     int day_04_2(QString input);
 
-    string day_05_1(void);
-    string day_05_2(void);
+    string day_05_1(QString user_input);
+    string day_05_2(QString user_input);
 
     int day_06_1(QString input);
     int day_06_2(QString input);
@@ -337,9 +337,9 @@ int AoC2022::day_04_2(QString input)
 
 
 // After the rearrangement procedure completes, what crate ends up on top of each stack?
-string AoC2022::day_05_1()
+string AoC2022::day_05_1(QString user_input)
 {
-    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_05.txt");
+    auto input = Utilities::splitQStringByNewline(user_input);
 
     // Find the empty line in out input.
     auto blankIndex = -1;
@@ -395,9 +395,9 @@ string AoC2022::day_05_1()
 }
 
 // After the rearrangement procedure completes, what crate ends up on top of each stack?
-string AoC2022::day_05_2()
+string AoC2022::day_05_2(QString user_input)
 {
-    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_05.txt");
+    auto input = Utilities::splitQStringByNewline(user_input);
 
     // Find the empty line in out input.
     auto blankIndex = -1;
