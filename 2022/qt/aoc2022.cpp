@@ -44,8 +44,8 @@ AoC2022::AoC2022()
     int day_07_1(QString input);
     int day_07_2(QString input);
 
-    int day_08_1(void);
-    int day_08_2(void);
+    int day_08_1(QString user_input);
+    int day_08_2(QString user_input);
 
     int day_09_1(void);
 
@@ -666,9 +666,9 @@ int AoC2022::day_07_2(QString input)
 
 
 // Consider your map; how many trees are visible from outside the grid?
-int AoC2022::day_08_1()
+int AoC2022::day_08_1(QString user_input)
 {
-    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_08.txt");
+    auto input = Utilities::splitQStringByNewline(user_input);
 
     auto treeMap = vector<vector<int>>{};
     auto visibleTreesSum = 0;
@@ -766,9 +766,9 @@ int AoC2022::day_08_1()
 
 // Consider each tree on your map.
     // What is the highest scenic score possible for any tree?
-int AoC2022::day_08_2()
+int AoC2022::day_08_2(QString user_input)
 {
-    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_08.txt");
+    auto input = Utilities::splitQStringByNewline(user_input);
 
     auto treeMap = vector<vector<int>>{};
     auto highestScenicScore = 1;
