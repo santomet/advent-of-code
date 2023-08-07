@@ -49,8 +49,8 @@ AoC2022::AoC2022()
 
     int day_09_1(void);
 
-    int day_10_1(void);
-    string day_10_2(void);
+    int day_10_1(QString user_input);
+    string day_10_2(QString user_input);
 
     int day_11_1(void);
 
@@ -931,9 +931,9 @@ int AoC2022::day_09_1()
 
 // Find the signal strength during the 20th, 60th, 100th, 140th, 180th, and 220th cycles.
     // What is the sum of these six signal strengths?
-int AoC2022::day_10_1()
+int AoC2022::day_10_1(QString user_input)
 {
-    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_10.txt");
+    auto input = Utilities::splitQStringByNewline(user_input);
 
     auto x = 1;
     auto signalStrength = 0;
@@ -963,9 +963,9 @@ int AoC2022::day_10_1()
 
 // Render the image given by your program.
     // What eight capital letters appear on your CRT?
-string AoC2022::day_10_2()
+string AoC2022::day_10_2(QString user_input)
 {
-    auto input = Utilities::readAllLinesInFile("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_10.txt");
+    auto input = Utilities::splitQStringByNewline(user_input);
 
     vector<vector<string>> crtScreen(7, vector<string>(41, " "));
 

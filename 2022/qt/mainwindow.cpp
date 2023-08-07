@@ -75,7 +75,7 @@ void MainWindow::execute()
             ui->textEdit->setText("NOT SOLVED YET");
             break;
         case 10:
-            output_text = part == 1 ? output_text.arg(AoC.day_10_1()) : output_text.arg(QString::fromStdString(AoC.day_10_2()));
+            output_text = part == 1 ? output_text.arg(AoC.day_10_1(input)) : output_text.arg(QString::fromStdString(AoC.day_10_2(input)));
             ui->textEdit->setText(output_text);
             break;
         case 11:

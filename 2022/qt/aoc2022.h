@@ -40,8 +40,8 @@ public:
 
     int day_09_1(void);
 
-    int day_10_1(void);
-    string day_10_2(void);
+    int day_10_1(QString user_input);
+    string day_10_2(QString user_input);
 
     int day_11_1(void);
 
