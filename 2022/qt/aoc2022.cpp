@@ -202,73 +202,89 @@ int AoC2022::day_02_2(QString input)
     return score;
 }
 
-
 // Find the item type that appears in both compartments of each rucksack.
     // What is the sum of the priorities of those item types?
-int AoC2022::day_03_1(QString input)
-{
+int AoC2022::day_03_1(QString input) {
     auto data = Utilities::splitQStringByNewline(input);
 
-    string line, first_compartment, second_compartment;
-    int length = 0, priority_sum = 0;
-
-    // LOOP:for (const auto& line : data) {
-    // LOOP:while (getline(file, line)) {
-        // length = line.length();
-        // first_compartment = line.substr(0, length / 2);
-        // second_compartment = line.substr(length / 2, length);
-
-        // for (int i = 0; i < first_compartment.length(); i++) {
-            // for (int j = 0; j < first_compartment.length(); j++) {
-                // if (first_compartment[i] == second_compartment[j]) {
-                   // if (islower(first_compartment[i])) {
-                       // priority_sum += first_compartment[i] - 96;
-                       // goto LOOP;
-                   // }
-
-                   // priority_sum += first_compartment[i] - 38;
-                   // goto LOOP;
-                // }
-            // }
-        // }
-    // }
-
-    return priority_sum;
-}
-
-// Find the item type that corresponds to the badges of each three-Elf group.
-    // What is the sum of the priorities of those item types?
-int AoC2022::day_03_2(QString input)
-{
-    ifstream file("/Users/ondrejpazourek/dev/cpp/advent-of-code/2022/qt/data/day_03.txt");
-    if (!file.is_open()) return -1;
-
-    string line1, line2, line3;
     int priority_sum = 0;
 
-    LOOP:while (getline(file, line1) && getline(file, line2) && getline(file, line3)) {
+    for (const auto& line : data) {
+        bool foundMatch = false;
 
-        for (int i = 0; i < line1.length(); i++) {
-            for (int j = 0; j < line2.length(); j++) {
-                if (line1[i] == line2[j]) {
-                    for (int k = 0; k < line3.length(); k++) {
-                        if (line1[i] == line3[k]) {
-                            if (islower(line1[i])) {
-                                priority_sum += line1[i] - 96;
-                                goto LOOP;
-                            }
+        while (!foundMatch) {
+            int length = line.length();
+            string first_compartment = line.substr(0, length / 2);
+            string second_compartment = line.substr(length / 2, length);
 
-                            priority_sum += line1[i] - 38;
-                            goto LOOP;
+            for (int i = 0; i < first_compartment.length(); i++) {
+               for (int j = 0; j < first_compartment.length(); j++) {
+                   if (first_compartment[i] == second_compartment[j]) {
+                       if (islower(first_compartment[i])) {
+                           priority_sum += first_compartment[i] - 'a' + 1;
+                       } else {
+                           priority_sum += first_compartment[i] - 'A' + 27;
                        }
+                       foundMatch = true;
+                       break; // No need to continue inner loop after finding match
                    }
-                }
+               }
+               if (foundMatch) {
+                   break; // No need to continue outer loop after finding match
+               }
             }
         }
     }
 
     return priority_sum;
 }
+
+// // Find the item type that corresponds to the badges of each three-Elf group.
+    // // What is the sum of the priorities of those item types?
+int AoC2022::day_03_2(QString input)
+{
+    auto data = Utilities::splitQStringByNewline(input);
+
+    int priority_sum = 0;
+
+    string line1, line2, line3;
+
+    for (int idx = 0; idx + 2 < data.size(); idx += 3) {
+        line1 = data[idx];
+        line2 = data[idx + 1];
+        line3 = data[idx + 2];
+
+        bool matchFound = false;
+
+        for (int i = 0; i < line1.length(); i++) {
+            for (int j = 0; j < line2.length(); j++) {
+               if (line1[i] == line2[j]) {
+                   for (int k = 0; k < line3.length(); k++) {
+                       if (line1[i] == line3[k]) {
+                           if (islower(line1[i])) {
+                               priority_sum += line1[i] - 96;
+                           } else {
+                               priority_sum += line1[i] - 38;
+                           }
+                           matchFound = true;
+                           break; // No need to continue innermost loop after finding match
+                       }
+                   }
+                   if (matchFound) {
+                       break; // No need to continue middle loop after finding match
+                   }
+               }
+            }
+            if (matchFound) {
+               break; // No need to continue outermost loop after finding match
+            }
+        }
+    }
+
+    return priority_sum;
+}
+
+
 
 
 // In how many assignment pairs does one range fully contain the other?
